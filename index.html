@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>BUMDes Graharta Kanugrahan | Portal Layanan & Transparansi Publik</title>
+  <meta name="description" content="Portal resmi layanan publik dan utilitas BUMDes Graharta Kanugrahan, Kec. Maduran, Lamongan. Cek tagihan air HIPPAM mandiri, pasang baru, lapor aduan WhatsApp, dan mart desa berstandar Android app.">
+  <meta name="theme-color" content="#0B3B60">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="application-name" content="BUMDes Graharta">
+
+  <!-- Favicon / Brand Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230B3B60'><path d='M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'/></svg>">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0B3B60',       /* Corporate Primary */
+              navyDark: '#07243B',   /* Deep Navy */
+              navyLight: '#125487',  /* Hover Navy */
+              teal: '#0284C7',       /* Fresh Water Cyan / Sky */
+              emerald: '#059669',    /* Fresh Green Village */
+              emeraldLight: '#10B981',
+              slateBg: '#F8FAFC',    /* Clean Slate White */
+              amber: '#D97706',      /* Alert Warning */
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            'pam': '0 10px 30px -5px rgba(11, 59, 96, 0.12), 0 4px 6px -2px rgba(11, 59, 96, 0.05)',
+            'pam-hover': '0 20px 40px -10px rgba(11, 59, 96, 0.2), 0 8px 12px -3px rgba(11, 59, 96, 0.08)',
+            'android-bottom': '0 -4px 20px rgba(0, 0, 0, 0.08)',
+            'android-sheet': '0 -10px 30px rgba(11, 59, 96, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Android Material 3 & Native App Feel */
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior-y: none;
+    }
+    .custom-gradient-hero {
+      background: linear-gradient(135deg, #07243B 0%, #0B3B60 60%, #0F4C7A 100%);
+    }
+    .pam-tab-active {
+      background-color: #0B3B60 !important;
+      color: #ffffff !important;
+      border-color: #0B3B60 !important;
+    }
+    .pam-tab-inactive {
+      background-color: #F1F5F9;
+      color: #475569;
+    }
+    .pam-tab-inactive:hover {
+      background-color: #E2E8F0;
+      color: #0B3B60;
+    }
+    /* Pulse badge */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .live-pulse {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
+    /* Scanner laser animation */
+    @keyframes scan-laser {
+      0% { top: 10%; opacity: 0.8; }
+      50% { top: 85%; opacity: 1; }
+      100% { top: 10%; opacity: 0.8; }
+    }
+    .laser-line {
+      animation: scan-laser 2.2s infinite ease-in-out;
+    }
+    /* Hide scrollbars on tabs & chips */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Native App bottom sheet animation on mobile */
+    @media (max-width: 640px) {
+      .android-sheet-box {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        max-height: 88vh !important;
+        border-radius: 1.75rem 1.75rem 0 0 !important;
+        animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+    @keyframes slideUpSheet {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    /* Material 3 active pill in bottom navigation */
+    .bottom-nav-active .nav-icon-pill {
+      background-color: #E0F2FE;
+      color: #0B3B60;
+      transform: scale(1.05);
+    }
+    .bottom-nav-active .nav-label {
+      color: #0B3B60;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body class="bg-brand-slateBg text-slate-800 antialiased selection:bg-brand-teal selection:text-white flex flex-col min-h-screen pb-24 lg:pb-0">
+
+  <!-- ======================================================== -->
+  <!-- 0. ANDROID APP INSTALL PROMPT BANNER (PWA EXPERIENCE) -->
+  <!-- ======================================================== -->
+  <div id="pwaBanner" class="bg-gradient-to-r from-brand-navyDark via-brand-navy to-brand-teal text-white px-4 py-2.5 text-xs border-b border-cyan-500/20 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <!-- App Icon -->
+        <div class="w-9 h-9 rounded-xl bg-white text-brand-navy flex items-center justify-center text-lg font-black shadow-md shrink-0">
+          <i class="fa-solid fa-droplet text-brand-teal"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-sm text-white">BUMDes Kanugrahan App</span>
+            <span class="bg-emerald-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">Cepat & Ringan</span>
+          </div>
+          <p class="text-[11px] text-cyan-200">★ 4.9 (420+ Warga Desa) &bull; Ukuran hemat 1.2 MB &bull; Buka instan tanpa kuota berat</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="promptInstallPwa()" class="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow transition active:scale-95 flex items-center gap-1.5">
+          <i class="fa-solid fa-download text-xs"></i>
+          <span>Pasang ke HP</span>
+        </button>
+        <button onclick="dismissPwaBanner()" class="text-slate-300 hover:text-white p-1 text-sm" aria-label="Tutup Banner">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 1. TOP TICKER & INFORMASI KILAT (PAM JAYA INSPIRED) -->
+  <!-- ======================================================== -->
+  <div class="bg-brand-navyDark text-slate-200 text-xs py-2 px-4 border-b border-brand-navyLight/40 hidden sm:block">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <!-- Live Running Announcement -->
+      <div class="flex items-center gap-2 overflow-hidden w-full sm:w-auto">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-brand-emerald text-white uppercase tracking-wider shrink-0">
+          <i class="fa-solid fa-bullhorn mr-1.5"></i> Warta Resmi
+        </span>
+        <div class="truncate text-slate-300">
+          <span>Status Distribusi Air HIPPAM Tirta Kanugrahan: <strong>Normal & Lancar di seluruh Dusun</strong> (Debit: 14.8 L/detik)</span>
+        </div>
+      </div>
+      <!-- Contact & Jam Layanan -->
+      <div class="flex items-center gap-4 text-[11px] shrink-0 font-medium text-slate-300">
+        <span class="hidden md:inline-flex items-center gap-1.5">
+          <i class="fa-regular fa-clock text-sky-400"></i> Jam Layanan: Sen - Jum (08:00 - 15:30 WIB)
+        </span>
+        <a href="https://wa.me/6281234567890?text=Halo%20BUMDes%20Graharta%20Kanugrahan,%20saya%20ingin%20konsultasi%20layanan" target="_blank" class="hover:text-white transition flex items-center gap-1 text-emerald-400 font-bold">
+          <i class="fa-brands fa-whatsapp text-sm"></i> Hotline: 0812-3456-7890
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 2. STICKY MAIN HEADER & ANDROID TOP APP BAR -->
+  <!-- ======================================================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <!-- Logo Brand & Identity -->
+        <a href="#" class="flex items-center gap-2.5 sm:gap-3.5 group">
+          <!-- Logo Emblem -->
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-brand-navy to-brand-teal flex items-center justify-center text-white shadow-md shadow-brand-navy/20 group-hover:scale-105 transition-transform duration-200 shrink-0">
+            <i class="fa-solid fa-droplet text-xl sm:text-2xl text-cyan-200"></i>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center gap-1.5">
+              <span class="text-lg sm:text-xl font-extrabold tracking-tight text-brand-navy">GRAHARTA</span>
+              <span class="text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-brand-navy border border-blue-200">BUMDes</span>
+            </div>
+            <span class="text-[10px] sm:text-[11px] tracking-wider uppercase font-semibold text-slate-500">Desa Kanugrahan &bull; Maduran</span>
+          </div>
+        </a>
+
+        <!-- Desktop Menu -->
+        <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+          <a href="#beranda" class="px-3.5 py-2 text-sm font-semibold text-brand-navy hover:text-brand-teal rounded-lg hover:bg-slate-50 transition">Beranda</a>
+          <a href="#quick-access" class="px-3.5 py-2 text-sm font-semibold text-slate-600 hover:text-brand-navy rounded-lg hover:bg-slate-50 transition">Cek Tagihan Air</a>
+          <a href="#unit-usaha" class="px-3.5 py-2 text-sm font-semibold text-slate-600 hover:text-brand-navy rounded-lg hover:bg-slate-50 transition">Unit Usaha</a>
+          <a href="#transparansi" class="px-3.5 py-2 text-sm font-semibold text-slate-600 hover:text-brand-navy rounded-lg hover:bg-slate-50 transition">Transparansi PADes</a>
+          <a href="#berita" class="px-3.5 py-2 text-sm font-semibold text-slate-600 hover:text-brand-navy rounded-lg hover:bg-slate-50 transition">Warta & Info</a>
+          <a href="#faq" class="px-3.5 py-2 text-sm font-semibold text-slate-600 hover:text-brand-navy rounded-lg hover:bg-slate-50 transition">Pusat Bantuan</a>
+        </nav>
+
+        <!-- CTA Action Buttons (Desktop) -->
+        <div class="hidden lg:flex items-center gap-3">
+          <button onclick="openModal('scannerModal')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold text-xs uppercase transition" title="Foto Angka Meteran">
+            <i class="fa-solid fa-camera text-brand-teal"></i> Scan Meter
+          </button>
+          <button onclick="openModal('laporModal')" class="relative inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-emerald hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-sm hover:shadow-md transition duration-200 min-h-[44px]">
+            <span class="w-2 h-2 rounded-full bg-white live-pulse"></span>
+            <i class="fa-solid fa-headset"></i> Layanan Aduan Warga
+          </button>
+        </div>
+
+        <!-- Android Quick Top Actions (Mobile) -->
+        <div class="flex items-center gap-1.5 lg:hidden">
+          <!-- Kamera Scan Meter Icon -->
+          <button onclick="openModal('scannerModal')" class="w-10 h-10 flex items-center justify-center text-brand-navy rounded-xl bg-blue-50 border border-blue-200 hover:bg-blue-100 transition active:scale-95" title="Scan Angka Meteran">
+            <i class="fa-solid fa-camera text-base"></i>
+          </button>
+          <!-- Android Notification Bell Icon with Badge -->
+          <button onclick="openModal('notifModal')" class="w-10 h-10 relative flex items-center justify-center text-slate-700 rounded-xl hover:bg-slate-100 transition active:scale-95" title="Notifikasi Desa">
+            <i class="fa-regular fa-bell text-lg"></i>
+            <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white live-pulse"></span>
+          </button>
+          <!-- Mobile Hamburger Toggle -->
+          <button id="mobileMenuBtn" aria-label="Buka Menu" class="w-10 h-10 flex items-center justify-center text-slate-700 hover:text-brand-navy rounded-xl hover:bg-slate-100 transition focus:outline-none active:scale-95">
+            <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu (Slide Down) -->
+    <div id="mobileDrawer" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-xl animate-fade-in">
+      <a href="#beranda" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl text-slate-700 hover:bg-blue-50 font-medium text-base active:bg-blue-100">
+        <span><i class="fa-solid fa-house mr-3 text-brand-navy w-5"></i>Beranda Portal</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="#quick-access" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl text-slate-700 hover:bg-blue-50 font-medium text-base active:bg-blue-100">
+        <span><i class="fa-solid fa-file-invoice-dollar mr-3 text-brand-teal w-5"></i>Cek Tagihan & Layanan Air</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="#unit-usaha" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl text-slate-700 hover:bg-blue-50 font-medium text-base active:bg-blue-100">
+        <span><i class="fa-solid fa-cubes-stacked mr-3 text-brand-navy w-5"></i>Unit Usaha BUMDes</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="#transparansi" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl text-slate-700 hover:bg-blue-50 font-medium text-base active:bg-blue-100">
+        <span><i class="fa-solid fa-chart-pie mr-3 text-brand-emerald w-5"></i>Transparansi Anggaran PADes</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="#berita" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl text-slate-700 hover:bg-blue-50 font-medium text-base active:bg-blue-100">
+        <span><i class="fa-solid fa-newspaper mr-3 text-brand-navy w-5"></i>Pengumuman & Warta</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="#faq" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-2xl text-slate-700 hover:bg-blue-50 font-medium text-base active:bg-blue-100">
+        <span><i class="fa-solid fa-circle-question mr-3 text-brand-teal w-5"></i>Tanya Jawab (FAQ)</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <div class="pt-4 border-t border-slate-100 flex flex-col gap-2.5">
+        <button onclick="openModal('scannerModal'); closeMobileMenu();" class="w-full py-3.5 px-4 rounded-2xl bg-cyan-50 border border-cyan-300 text-brand-navy font-bold text-center flex items-center justify-center gap-2 min-h-[48px] active:scale-95">
+          <i class="fa-solid fa-camera text-brand-teal text-lg"></i> Simulasi Scan Angka Meteran AI
+        </button>
+        <button onclick="openModal('laporModal'); closeMobileMenu();" class="w-full py-3.5 px-4 rounded-2xl bg-brand-emerald hover:bg-emerald-700 text-white font-bold text-center flex items-center justify-center gap-2 shadow-sm min-h-[48px] active:scale-95">
+          <i class="fa-solid fa-headset text-lg"></i> Form Aduan Cepat WhatsApp
+        </button>
+        <button onclick="openModal('pasangModal'); closeMobileMenu();" class="w-full py-3.5 px-4 rounded-2xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-center flex items-center justify-center gap-2 min-h-[48px] active:scale-95">
+          <i class="fa-solid fa-screwdriver-wrench"></i> Permohonan Sambungan Baru
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- ANDROID MATERIAL 3 HORIZONTAL QUICK ACTION CHIPS -->
+  <!-- ======================================================== -->
+  <div class="bg-white border-b border-slate-200/80 px-4 py-2.5 sticky top-16 sm:top-20 z-30 shadow-xs">
+    <div class="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth">
+      <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1 hidden sm:inline">Akses Kilat:</span>
+      <button onclick="scrollToTab(1)" class="shrink-0 px-3.5 py-1.5 rounded-full bg-blue-50 text-brand-navy border border-blue-200 hover:bg-blue-100 font-bold text-xs flex items-center gap-1.5 active:scale-95 transition">
+        <i class="fa-solid fa-file-invoice-dollar text-brand-teal"></i> Cek Tagihan Air
+      </button>
+      <button onclick="openModal('scannerModal')" class="shrink-0 px-3.5 py-1.5 rounded-full bg-cyan-50 text-brand-navy border border-cyan-300 hover:bg-cyan-100 font-bold text-xs flex items-center gap-1.5 active:scale-95 transition">
+        <i class="fa-solid fa-camera text-brand-teal"></i> Scan Meter
+      </button>
+      <button onclick="openModal('laporModal')" class="shrink-0 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100 font-bold text-xs flex items-center gap-1.5 active:scale-95 transition">
+        <i class="fa-brands fa-whatsapp text-emerald-600"></i> Lapor Gangguan
+      </button>
+      <button onclick="scrollToTab(2)" class="shrink-0 px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold text-xs flex items-center gap-1.5 active:scale-95 transition">
+        <i class="fa-solid fa-faucet-drip text-slate-600"></i> Pasang Baru
+      </button>
+      <button onclick="scrollToTab(4)" class="shrink-0 px-3.5 py-1.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 font-bold text-xs flex items-center gap-1.5 active:scale-95 transition">
+        <i class="fa-solid fa-store text-amber-600"></i> Beli Pupuk & Gas
+      </button>
+      <a href="#transparansi" class="shrink-0 px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold text-xs flex items-center gap-1.5 active:scale-95 transition">
+        <i class="fa-solid fa-chart-pie text-slate-600"></i> Realisasi PADes
+      </a>
+      <a href="#faq" class="shrink-0 px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold text-xs flex items-center gap-1.5 active:scale-95 transition">
+        <i class="fa-solid fa-circle-question text-slate-600"></i> Bantuan & Jadwal
+      </a>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 3. HERO SECTION & FLOATING PAM-STYLE QUICK ACCESS WIDGET -->
+  <!-- ======================================================== -->
+  <section id="beranda" class="custom-gradient-hero text-white relative pt-8 sm:pt-12 pb-24 md:pb-32 overflow-hidden">
+    <!-- Background Water Ripple Accent -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none">
+      <svg class="w-full h-full object-cover" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+    </div>
+
+    <!-- Glowing orbs -->
+    <div class="absolute -top-20 -right-20 w-96 h-96 bg-brand-teal/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 -left-20 w-96 h-96 bg-brand-emerald/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Text & Tagline -->
+        <div class="lg:col-span-7 space-y-4 sm:space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-cyan-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 live-pulse"></span>
+            Pelayanan Publik Terpadu BUMDes Desa Kanugrahan
+          </div>
+          <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            Mengelola Amanah Desa, <br class="hidden sm:inline">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-emerald-300">
+              Mengalirkan Kesejahteraan
+            </span> Bersama.
+          </h1>
+          <p class="text-slate-200 text-xs sm:text-base md:text-lg max-w-2xl leading-relaxed">
+            Portal resmi tata kelola usaha desa berstandar korporat modern. Memudahkan warga mengakses air bersih HIPPAM Tirta Kanugrahan, transparansi anggaran, cek tagihan mandiri, serta aduan responsif 24 jam.
+          </p>
+
+          <!-- Quick Badges -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-4 pt-1 sm:pt-2 text-xs text-slate-200">
+            <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl backdrop-blur-sm border border-white/10">
+              <i class="fa-solid fa-shield-halved text-emerald-400 text-sm sm:text-base"></i>
+              <span>SK Menkumham RI</span>
+            </div>
+            <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl backdrop-blur-sm border border-white/10">
+              <i class="fa-solid fa-droplet text-cyan-300 text-sm sm:text-base"></i>
+              <span>Standar Uji Lab</span>
+            </div>
+            <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl backdrop-blur-sm border border-white/10">
+              <i class="fa-solid fa-mobile-screen-button text-yellow-300 text-sm sm:text-base"></i>
+              <span>Android Fast Loading</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Card Info / Live Status Widget -->
+        <div class="lg:col-span-5">
+          <div class="bg-white/10 backdrop-blur-md border border-white/20 p-5 sm:p-6 rounded-3xl shadow-2xl text-white space-y-4 sm:space-y-5">
+            <div class="flex items-center justify-between border-b border-white/15 pb-3 sm:pb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-300 text-lg">
+                  <i class="fa-solid fa-gauge-high"></i>
+                </div>
+                <div>
+                  <h2 class="text-xs sm:text-sm font-bold text-white leading-none">Status Operasional HIPPAM</h2>
+                  <span class="text-[10px] sm:text-[11px] text-slate-300">Pemantauan Sistem Air Real-time</span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500 text-white tracking-wide uppercase">
+                Aktif Prima
+              </span>
+            </div>
+
+            <!-- Metrics List -->
+            <div class="grid grid-cols-2 gap-2.5 sm:gap-3 text-left">
+              <div class="bg-black/20 p-3 rounded-2xl border border-white/10">
+                <span class="text-[10px] sm:text-[11px] text-slate-300 block mb-0.5">Tekanan Jaringan</span>
+                <span class="text-base sm:text-lg font-extrabold text-cyan-300">2.8 - 3.2 Bar</span>
+                <span class="text-[9px] sm:text-[10px] text-emerald-300 block mt-0.5"><i class="fa-solid fa-check"></i> Stabil merata</span>
+              </div>
+              <div class="bg-black/20 p-3 rounded-2xl border border-white/10">
+                <span class="text-[10px] sm:text-[11px] text-slate-300 block mb-0.5">Debit Pompa Induk</span>
+                <span class="text-base sm:text-lg font-extrabold text-cyan-300">14.8 L/dtk</span>
+                <span class="text-[9px] sm:text-[10px] text-emerald-300 block mt-0.5"><i class="fa-solid fa-arrow-trend-up"></i> Suplai 4 Dusun</span>
+              </div>
+              <div class="bg-black/20 p-3 rounded-2xl border border-white/10">
+                <span class="text-[10px] sm:text-[11px] text-slate-300 block mb-0.5">Tingkat Kejernihan</span>
+                <span class="text-base sm:text-lg font-extrabold text-cyan-300">0.4 NTU</span>
+                <span class="text-[9px] sm:text-[10px] text-emerald-300 block mt-0.5"><i class="fa-solid fa-check"></i> Bebas Bau/Keruh</span>
+              </div>
+              <div class="bg-black/20 p-3 rounded-2xl border border-white/10">
+                <span class="text-[10px] sm:text-[11px] text-slate-300 block mb-0.5">Tim Tanggap Siaga</span>
+                <span class="text-base sm:text-lg font-extrabold text-emerald-300">24 Jam Penuh</span>
+                <span class="text-[9px] sm:text-[10px] text-slate-300 block mt-0.5">Posko Induk BUMDes</span>
+              </div>
+            </div>
+
+            <div class="pt-1 text-center">
+              <a href="#quick-access" class="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl bg-gradient-to-r from-brand-teal to-cyan-500 hover:from-cyan-500 hover:to-brand-teal text-white font-bold text-sm shadow-lg transition duration-200 active:scale-95 min-h-[48px]">
+                <i class="fa-solid fa-magnifying-glass"></i> Cek Tagihan Air Anda Sekarang
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 4. PAM JAYA QUICK ACCESS TABBED WIDGET (FLOATING INTERACTIVE) -->
+  <!-- ======================================================== -->
+  <section id="quick-access" class="relative z-30 -mt-16 sm:-mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-3xl shadow-pam border border-slate-200/80 overflow-hidden">
+      <!-- Tabs Header Navigation -->
+      <div class="grid grid-cols-2 md:grid-cols-4 border-b border-slate-200 text-xs sm:text-sm font-bold bg-slate-50">
+        <button id="tabBtn1" onclick="switchTab(1)" class="pam-tab-active py-3.5 sm:py-4 px-2 sm:px-5 flex items-center justify-center gap-2 transition text-center min-h-[52px] sm:min-h-[56px] border-b-2">
+          <i class="fa-solid fa-file-invoice-dollar text-base sm:text-lg text-cyan-300"></i>
+          <span>1. Cek Tagihan</span>
+        </button>
+        <button id="tabBtn2" onclick="switchTab(2)" class="pam-tab-inactive py-3.5 sm:py-4 px-2 sm:px-5 flex items-center justify-center gap-2 transition text-center min-h-[52px] sm:min-h-[56px] border-b-2 border-transparent">
+          <i class="fa-solid fa-faucet-drip text-base sm:text-lg"></i>
+          <span>2. Pasang Baru</span>
+        </button>
+        <button id="tabBtn3" onclick="switchTab(3)" class="pam-tab-inactive py-3.5 sm:py-4 px-2 sm:px-5 flex items-center justify-center gap-2 transition text-center min-h-[52px] sm:min-h-[56px] border-b-2 border-transparent">
+          <i class="fa-solid fa-triangle-exclamation text-base sm:text-lg"></i>
+          <span>3. Lapor Gangguan</span>
+        </button>
+        <button id="tabBtn4" onclick="switchTab(4)" class="pam-tab-inactive py-3.5 sm:py-4 px-2 sm:px-5 flex items-center justify-center gap-2 transition text-center min-h-[52px] sm:min-h-[56px] border-b-2 border-transparent">
+          <i class="fa-solid fa-store text-base sm:text-lg"></i>
+          <span>4. Toko Desa</span>
+        </button>
+      </div>
+
+      <!-- Tab Contents Container -->
+      <div class="p-4 sm:p-8">
+
+        <!-- TAB 1: CEK TAGIHAN AIR & SAMPAH (PAM JAYA CORE REPLICA) -->
+        <div id="tabContent1" class="block animate-fade-in space-y-5 sm:space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div>
+              <h3 class="text-lg sm:text-xl font-extrabold text-brand-navy">Cek Tagihan HIPPAM & Iuran Desa</h3>
+              <p class="text-xs sm:text-sm text-slate-500">Ketik nomor sambungan (ID Pelanggan) Anda untuk melihat rincian pemakaian m³ dan tagihan.</p>
+            </div>
+            <!-- Quick Demo IDs -->
+            <div class="flex items-center gap-1.5 flex-wrap text-xs">
+              <span class="text-slate-400 font-medium">Contoh Warga:</span>
+              <button onclick="fillSearchId('KNG-2024-001')" class="px-2.5 py-1 rounded-xl bg-blue-50 text-brand-navy border border-blue-200 hover:bg-blue-100 font-semibold transition active:scale-95">
+                KNG-2024-001 (Pak Sutrisno)
+              </button>
+              <button onclick="fillSearchId('KNG-2024-042')" class="px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 font-semibold transition active:scale-95">
+                KNG-2024-042 (Bu Sumini)
+              </button>
+              <button onclick="fillSearchId('KNG-2024-108')" class="px-2.5 py-1 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 font-semibold transition active:scale-95">
+                KNG-2024-108 (Warung)
+              </button>
+            </div>
+          </div>
+
+          <!-- Form Pencarian -->
+          <form onsubmit="handleCekTagihan(event)" class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+            <div class="md:col-span-8 relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <i class="fa-solid fa-id-card text-lg"></i>
+              </div>
+              <input type="text" id="inputNoSambungan" required placeholder="Masukkan ID Pelanggan (Contoh: KNG-2024-001)" class="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-brand-teal text-sm md:text-base font-semibold text-slate-800 uppercase tracking-wide min-h-[48px]">
+            </div>
+            <div class="md:col-span-4 flex gap-2">
+              <button type="submit" class="w-full py-3.5 px-6 rounded-2xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-sm md:text-base flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition min-h-[48px] active:scale-95">
+                <i class="fa-solid fa-magnifying-glass"></i> Cek Tagihan
+              </button>
+              <button type="button" onclick="openModal('scannerModal')" class="px-4 py-3.5 rounded-2xl bg-cyan-50 border border-cyan-300 hover:bg-cyan-100 text-brand-navy text-sm font-semibold transition active:scale-95" title="Foto Meteran">
+                <i class="fa-solid fa-camera"></i>
+              </button>
+              <button type="button" onclick="resetCekTagihan()" class="px-4 py-3.5 rounded-2xl border border-slate-200 hover:bg-slate-100 text-slate-500 text-sm font-semibold transition active:scale-95" title="Reset">
+                <i class="fa-solid fa-rotate-left"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Result Area (Dynamic Inject) -->
+          <div id="billResultBox" class="hidden border rounded-3xl p-5 sm:p-6 bg-slate-50 transition-all duration-300 shadow-inner">
+            <!-- Dynamic Content populated via JS -->
+          </div>
+        </div>
+
+        <!-- TAB 2: PASANG SAMBUNGAN BARU -->
+        <div id="tabContent2" class="hidden animate-fade-in space-y-5">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="text-lg sm:text-xl font-extrabold text-brand-navy">Pengajuan Sambungan Air HIPPAM Baru</h3>
+              <p class="text-xs sm:text-sm text-slate-500">Proses cepat 1-3 hari kerja dengan meteran air SNI & instalasi pipa standar desa.</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-brand-navy text-xs font-bold self-start md:self-auto">
+              <i class="fa-solid fa-file-signature"></i> Pendaftaran Online Warga
+            </span>
+          </div>
+
+          <form onsubmit="handlePengajuanBaru(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Lengkap Pemohon</label>
+              <input type="text" id="pasangNama" required placeholder="Contoh: Ahmad Fauzi" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-sm min-h-[48px]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">NIK (Nomor Induk Kependudukan)</label>
+              <input type="number" id="pasangNik" required placeholder="16 digit NIK Desa Kanugrahan" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-sm min-h-[48px]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dusun / Wilayah RT & RW</label>
+              <select id="pasangDusun" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-sm min-h-[48px]">
+                <option value="Dusun Kanugrahan Timur (RT 01 - 04)">Dusun Kanugrahan Timur (RT 01 - 04)</option>
+                <option value="Dusun Kanugrahan Barat (RT 05 - 08)">Dusun Kanugrahan Barat (RT 05 - 08)</option>
+                <option value="Dusun Krajan Tengah (RT 09 - 12)">Dusun Krajan Tengah (RT 09 - 12)</option>
+                <option value="Dusun Sukomulyo (RT 13 - 16)">Dusun Sukomulyo (RT 13 - 16)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nomor WhatsApp Aktif</label>
+              <input type="tel" id="pasangWa" required placeholder="08xxxxxxxxxx" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-sm min-h-[48px]">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Paket Sambungan</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <label class="border p-3.5 rounded-2xl cursor-pointer hover:border-brand-teal flex items-start gap-3 bg-white active:scale-98 transition">
+                  <input type="radio" name="paketPasang" value="Rumah Tangga Standar (Rp 450.000)" checked class="mt-1 text-brand-teal">
+                  <div class="text-xs">
+                    <p class="font-bold text-brand-navy">Rumah Tangga Standar</p>
+                    <p class="text-slate-500">Meteran SNI + Pipa 10m + Pemasangan</p>
+                    <span class="font-extrabold text-brand-emerald text-sm mt-1 block">Rp 450.000</span>
+                  </div>
+                </label>
+                <label class="border p-3.5 rounded-2xl cursor-pointer hover:border-brand-teal flex items-start gap-3 bg-white active:scale-98 transition">
+                  <input type="radio" name="paketPasang" value="Usaha / UMKM Desa (Rp 600.000)" class="mt-1 text-brand-teal">
+                  <div class="text-xs">
+                    <p class="font-bold text-brand-navy">Usaha / UMKM Desa</p>
+                    <p class="text-slate-500">Meteran debit tinggi + Pipa 15m</p>
+                    <span class="font-extrabold text-brand-emerald text-sm mt-1 block">Rp 600.000</span>
+                  </div>
+                </label>
+                <label class="border p-3.5 rounded-2xl cursor-pointer hover:border-brand-teal flex items-start gap-3 bg-white active:scale-98 transition">
+                  <input type="radio" name="paketPasang" value="Fasilitas Sosial / Masjid (GRATIS Biaya Pasang)" class="mt-1 text-brand-teal">
+                  <div class="text-xs">
+                    <p class="font-bold text-brand-navy">Sosial / Masjid / Musholla</p>
+                    <p class="text-slate-500">Subsidi BUMDes Peduli Ummat</p>
+                    <span class="font-extrabold text-brand-teal text-sm mt-1 block">GRATIS Pasang</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="md:col-span-2 pt-2">
+              <button type="submit" class="w-full py-3.5 rounded-2xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2 min-h-[48px] active:scale-95">
+                <i class="fa-solid fa-paper-plane"></i> Kirim Formulir & Terbitkan Tiket Pendaftaran
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- TAB 3: LAPOR GANGGUAN / ADUAN CEPAT (AUTO WHATSAPP) -->
+        <div id="tabContent3" class="hidden animate-fade-in space-y-5">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="text-lg sm:text-xl font-extrabold text-brand-navy">Pusat Pengaduan & Lapor Gangguan Cepat</h3>
+              <p class="text-xs sm:text-sm text-slate-500">Laporan terintegrasi langsung ke WhatsApp Petugas Reaksi Cepat BUMDes dengan nomor tiket resmi.</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold self-start md:self-auto">
+              <i class="fa-solid fa-bolt"></i> Respon Cepat 1x24 Jam
+            </span>
+          </div>
+
+          <form onsubmit="handleKirimAduan(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Pelapor / Warga</label>
+              <input type="text" id="laporNama" required placeholder="Nama Anda" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-sm min-h-[48px]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jenis Kendala / Aduan</label>
+              <select id="laporKategori" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-sm font-semibold min-h-[48px]">
+                <option value="Pipa Bocor / Rembes di Jalan">Pipa Bocor / Rembes di Jalan</option>
+                <option value="Aliran Air Mati / Debit Lemah">Aliran Air Mati / Debit Lemah</option>
+                <option value="Air Keruh / Berpasir / Berbau">Air Keruh / Berpasir / Berbau</option>
+                <option value="Meteran Air Rusak / Angka Macet">Meteran Air Rusak / Angka Macet</option>
+                <option value="Keterlambatan Angkutan Sampah Desa">Keterlambatan Angkutan Sampah Desa</option>
+                <option value="Keluhan Lainnya">Keluhan Pelayanan Lainnya</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alamat Dusun / Titik Lokasi</label>
+              <input type="text" id="laporLokasi" required placeholder="Contoh: Depan Musholla RT 03 Dusun Timur" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-sm min-h-[48px]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nomor WhatsApp Pelapor</label>
+              <input type="tel" id="laporWa" required placeholder="08xxxxxxxxxx" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-sm min-h-[48px]">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Uraian Detail Masalah</label>
+              <textarea id="laporDeskripsi" rows="3" required placeholder="Jelaskan sejak kapan air mengecil atau lokasi persis kebocoran pipa..." class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-sm"></textarea>
+            </div>
+            <div class="md:col-span-2 pt-2">
+              <button type="submit" class="w-full py-3.5 rounded-2xl bg-brand-emerald hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2 min-h-[48px] active:scale-95">
+                <i class="fa-brands fa-whatsapp text-lg"></i> Kirim Laporan via WhatsApp Resmi BUMDes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- TAB 4: KANUGRAHAN MART & BELANJA PRODUK DESA -->
+        <div id="tabContent4" class="hidden animate-fade-in space-y-5">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="text-lg sm:text-xl font-extrabold text-brand-navy">Kanugrahan Mart & Logistik Pertanian</h3>
+              <p class="text-xs sm:text-sm text-slate-500">Penyediaan pupuk, sembako murah, elpiji pangkalan desa, dan benih padi unggul langsung dari BUMDes.</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold self-start md:self-auto">
+              <i class="fa-solid fa-seedling"></i> Dukungan Ketahanan Pangan
+            </span>
+          </div>
+
+          <!-- Product Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            <!-- Item 1 -->
+            <div class="border border-slate-200 rounded-2xl sm:rounded-3xl p-3 sm:p-4 bg-white hover:shadow-md transition text-center flex flex-col justify-between">
+              <div>
+                <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">
+                  <i class="fa-solid fa-wheat-awn"></i>
+                </div>
+                <h4 class="font-bold text-xs sm:text-sm text-slate-800">Pupuk Organik BUMDes</h4>
+                <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Kemasan 25 Kg olahan limbah desa</p>
+              </div>
+              <div class="mt-3 sm:mt-4">
+                <span class="text-xs sm:text-sm font-extrabold text-brand-navy block">Rp 45.000 / sak</span>
+                <button onclick="orderProduk('Pupuk Organik BUMDes')" class="mt-2 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-brand-navy hover:text-white text-brand-navy font-bold text-xs transition active:scale-95 min-h-[44px]">
+                  <i class="fa-brands fa-whatsapp mr-1"></i> Pesan
+                </button>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="border border-slate-200 rounded-2xl sm:rounded-3xl p-3 sm:p-4 bg-white hover:shadow-md transition text-center flex flex-col justify-between">
+              <div>
+                <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">
+                  <i class="fa-solid fa-bowl-rice"></i>
+                </div>
+                <h4 class="font-bold text-xs sm:text-sm text-slate-800">Beras Pulen Kanugrahan</h4>
+                <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Kemasan 5 Kg hasil panen sawah desa</p>
+              </div>
+              <div class="mt-3 sm:mt-4">
+                <span class="text-xs sm:text-sm font-extrabold text-brand-navy block">Rp 72.000 / zak</span>
+                <button onclick="orderProduk('Beras Pulen Kanugrahan 5Kg')" class="mt-2 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-brand-navy hover:text-white text-brand-navy font-bold text-xs transition active:scale-95 min-h-[44px]">
+                  <i class="fa-brands fa-whatsapp mr-1"></i> Pesan
+                </button>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="border border-slate-200 rounded-2xl sm:rounded-3xl p-3 sm:p-4 bg-white hover:shadow-md transition text-center flex flex-col justify-between">
+              <div>
+                <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">
+                  <i class="fa-solid fa-gas-pump"></i>
+                </div>
+                <h4 class="font-bold text-xs sm:text-sm text-slate-800">LPG 3 Kg (Pangkalan Desa)</h4>
+                <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Khusus warga KTP Kanugrahan</p>
+              </div>
+              <div class="mt-3 sm:mt-4">
+                <span class="text-xs sm:text-sm font-extrabold text-brand-navy block">Rp 18.000 / tabung</span>
+                <button onclick="orderProduk('LPG 3 Kg Pangkalan')" class="mt-2 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-brand-navy hover:text-white text-brand-navy font-bold text-xs transition active:scale-95 min-h-[44px]">
+                  <i class="fa-brands fa-whatsapp mr-1"></i> Pesan
+                </button>
+              </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="border border-slate-200 rounded-2xl sm:rounded-3xl p-3 sm:p-4 bg-white hover:shadow-md transition text-center flex flex-col justify-between">
+              <div>
+                <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-blue-50 text-brand-teal rounded-2xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">
+                  <i class="fa-solid fa-bottle-water"></i>
+                </div>
+                <h4 class="font-bold text-xs sm:text-sm text-slate-800">Air Galon Ozon Tirta</h4>
+                <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Air minum isi ulang filtrasi RO</p>
+              </div>
+              <div class="mt-3 sm:mt-4">
+                <span class="text-xs sm:text-sm font-extrabold text-brand-navy block">Rp 5.000 / galon</span>
+                <button onclick="orderProduk('Air Galon Ozon Tirta')" class="mt-2 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-brand-navy hover:text-white text-brand-navy font-bold text-xs transition active:scale-95 min-h-[44px]">
+                  <i class="fa-brands fa-whatsapp mr-1"></i> Pesan
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 5. STATS BAR / COUNTER KINERJA BUMDES (SEKILAS KINERJA) -->
+  <!-- ======================================================== -->
+  <section class="py-12 sm:py-16 bg-white border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+        <span class="text-xs font-bold text-brand-teal tracking-wider uppercase">Capaian & Akuntabilitas</span>
+        <h2 class="text-xl sm:text-3xl font-extrabold text-brand-navy mt-1">Indikator Kinerja & Pelayanan 2024</h2>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-center">
+        <!-- Stat 1 -->
+        <div class="p-4 sm:p-6 rounded-3xl bg-slate-50 border border-slate-200/70 hover:shadow-md transition">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-2xl bg-blue-100 text-brand-navy flex items-center justify-center text-xl sm:text-2xl">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <p class="text-2xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">1.450+</p>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 mt-1 sm:mt-2">Kepala Keluarga Terlayani</p>
+          <span class="text-[10px] sm:text-[11px] text-emerald-600 font-bold mt-1 inline-block"><i class="fa-solid fa-arrow-up"></i> 98% Cakupan Dusun</span>
+        </div>
+
+        <!-- Stat 2 -->
+        <div class="p-4 sm:p-6 rounded-3xl bg-slate-50 border border-slate-200/70 hover:shadow-md transition">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-2xl bg-cyan-100 text-brand-teal flex items-center justify-center text-xl sm:text-2xl">
+            <i class="fa-solid fa-water"></i>
+          </div>
+          <p class="text-2xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">99.4%</p>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 mt-1 sm:mt-2">Efisiensi Distribusi Air</p>
+          <span class="text-[10px] sm:text-[11px] text-emerald-600 font-bold mt-1 inline-block"><i class="fa-solid fa-check"></i> Kebocoran &lt; 0.6%</span>
+        </div>
+
+        <!-- Stat 3 -->
+        <div class="p-4 sm:p-6 rounded-3xl bg-slate-50 border border-slate-200/70 hover:shadow-md transition">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl sm:text-2xl">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+          <p class="text-2xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">4 Unit</p>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 mt-1 sm:mt-2">Unit Usaha Mandiri Aktif</p>
+          <span class="text-[10px] sm:text-[11px] text-slate-500 font-medium mt-1 inline-block">32 Tenaga Kerja Desa</span>
+        </div>
+
+        <!-- Stat 4 -->
+        <div class="p-4 sm:p-6 rounded-3xl bg-slate-50 border border-slate-200/70 hover:shadow-md transition">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl sm:text-2xl">
+            <i class="fa-solid fa-sack-dollar"></i>
+          </div>
+          <p class="text-2xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">Rp 285 Jt</p>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 mt-1 sm:mt-2">Kontribusi PADes / Tahun</p>
+          <span class="text-[10px] sm:text-[11px] text-emerald-600 font-bold mt-1 inline-block"><i class="fa-solid fa-arrow-up"></i> Disetor ke Kas Desa</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 6. PROFIL & SAMBUTAN PIMPINAN BUMDES & KEPALA DESA -->
+  <!-- ======================================================== -->
+  <section class="py-12 sm:py-20 bg-brand-slateBg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-slate-200 shadow-sm">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <!-- Visual Leader / Profile Card -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="relative mx-auto max-w-sm rounded-3xl overflow-hidden bg-gradient-to-tr from-brand-navy to-brand-teal p-1 shadow-xl">
+              <div class="bg-slate-900 rounded-[22px] overflow-hidden relative">
+                <!-- Avatar / Ilustrasi Pimpinan -->
+                <div class="h-72 sm:h-80 bg-slate-800 flex flex-col items-center justify-end p-6 text-center text-white relative">
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent"></div>
+                  <!-- Icon placeholder stylish avatar -->
+                  <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/10 backdrop-blur-md border-2 border-white/20 flex items-center justify-center text-3xl sm:text-4xl mb-4 relative z-10 text-cyan-200 shadow-lg">
+                    <i class="fa-solid fa-user-tie"></i>
+                  </div>
+                  <div class="relative z-10">
+                    <h3 class="text-lg sm:text-xl font-extrabold text-white">H. Bambang Wahyudi, S.E.</h3>
+                    <p class="text-xs text-cyan-300 font-medium">Direktur BUMDes Graharta Kanugrahan</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1">Didampingi Kepala Desa Kanugrahan</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Legalitas Badge Card -->
+            <div class="bg-blue-50/80 border border-blue-200/80 p-3.5 sm:p-4 rounded-2xl flex items-center gap-3">
+              <i class="fa-solid fa-stamp text-xl sm:text-2xl text-brand-navy"></i>
+              <div class="text-xs">
+                <p class="font-bold text-brand-navy">Legalitas Berbadan Hukum Resmi</p>
+                <p class="text-slate-600 text-[11px]">SK Menkumham RI No. AHU-01928.AH.01.04 Tahun 2022</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Text Sambutan & Visi Misi -->
+          <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+            <div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-brand-navy text-xs font-bold uppercase tracking-wider">
+                <i class="fa-solid fa-quote-left"></i> Sambutan Direktur BUMDes
+              </span>
+              <h2 class="text-xl sm:text-3xl font-extrabold text-brand-navy mt-2 sm:mt-3 leading-snug">
+                "Tata Kelola Mandiri, Terbuka, dan Melayani Setiap Jengkal Kebutuhan Warga"
+              </h2>
+            </div>
+
+            <div class="space-y-3 text-slate-600 text-xs sm:text-base leading-relaxed">
+              <p>
+                Bismillahirrohmanirrohim. Atas nama seluruh jajaran pengelola BUMDes Graharta Kanugrahan dan Pemerintah Desa Kanugrahan, kami mempersembahkan portal layanan digital ini sebagai komitmen transparansi tanpa sekat bagi seluruh warga.
+              </p>
+              <p>
+                Mengadopsi standar layanan utilitas publik modern seperti PAM JAYA, unit Tirta Kanugrahan bertekad memastikan setiap tetes air yang mengalir ke dapur dan pekarangan warga adalah air yang higienis, bertekanan stabil, dan dapat diakses dengan tarif yang adil. Pendapatan yang dihimpun BUMDes dikembalikan 100% untuk kemaslahatan pembangunan Desa Kanugrahan.
+              </p>
+            </div>
+
+            <!-- 4 Nilai Utama (Corporate Core Values) -->
+            <div class="grid grid-cols-2 gap-2.5 sm:gap-3 pt-2">
+              <div class="p-3 sm:p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div class="flex items-center gap-1.5 sm:gap-2 font-bold text-brand-navy text-xs sm:text-sm">
+                  <i class="fa-solid fa-hand-holding-heart text-brand-teal"></i> Amanah
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Mengelola aset desa dengan integritas tanpa kompromi.</p>
+              </div>
+              <div class="p-3 sm:p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div class="flex items-center gap-1.5 sm:gap-2 font-bold text-brand-navy text-xs sm:text-sm">
+                  <i class="fa-solid fa-bolt text-amber-500"></i> Responsif
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Aduan pipa bocor & gangguan selesai dalam 1x24 jam.</p>
+              </div>
+              <div class="p-3 sm:p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div class="flex items-center gap-1.5 sm:gap-2 font-bold text-brand-navy text-xs sm:text-sm">
+                  <i class="fa-solid fa-eye text-brand-emerald"></i> Transparan
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Laporan PADes & iuran air dibuka untuk seluruh warga.</p>
+              </div>
+              <div class="p-3 sm:p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div class="flex items-center gap-1.5 sm:gap-2 font-bold text-brand-navy text-xs sm:text-sm">
+                  <i class="fa-solid fa-leaf text-emerald-600"></i> Lestari
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Menjaga sumber mata air desa lintas generasi.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 7. UNIT USAHA UNGGULAN BUMDES (SERVICES CARD GRID) -->
+  <!-- ======================================================== -->
+  <section id="unit-usaha" class="py-12 sm:py-24 bg-white border-b border-slate-200/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4">
+        <div>
+          <span class="text-xs font-bold text-brand-teal tracking-wider uppercase">Lini Bisnis Desa</span>
+          <h2 class="text-xl sm:text-3xl md:text-4xl font-extrabold text-brand-navy mt-1">Unit Usaha BUMDes Graharta</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1 sm:mt-2 max-w-xl">Memberdayakan potensi asli desa melalui empat pilar usaha mandiri yang produktif dan berkeadilan.</p>
+        </div>
+        <button onclick="openModal('laporModal')" class="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl border border-slate-300 hover:border-brand-navy text-brand-navy font-bold text-xs uppercase tracking-wider transition self-start md:self-auto min-h-[44px]">
+          <i class="fa-solid fa-handshake"></i> Kemitraan Usaha Warga
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <!-- Unit 1: Tirta Kanugrahan -->
+        <div class="group bg-slate-50 rounded-3xl p-5 sm:p-6 border border-slate-200/80 hover:border-brand-teal hover:shadow-pam-hover transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-100 text-brand-navy group-hover:bg-brand-navy group-hover:text-cyan-200 flex items-center justify-center text-xl sm:text-2xl transition duration-300 mb-4 sm:mb-5">
+              <i class="fa-solid fa-droplet"></i>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-blue-50 text-brand-navy border border-blue-200">
+              Unit Inti / HIPPAM
+            </span>
+            <h3 class="text-base sm:text-lg font-bold text-brand-navy mt-3">Tirta Kanugrahan</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Penyediaan air minum & air bersih perpipaan terstandarisasi untuk 1.450+ KK. Dilengkapi pompa cadangan & sistem meter digital.
+            </p>
+            <ul class="mt-4 space-y-1.5 text-xs text-slate-500">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Tarif murah: Rp 2.500/m³</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Uji berkala Lab Kemenkes</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Patroli pipa tiap hari</li>
+            </ul>
+          </div>
+          <button onclick="showDetailUnit('Tirta Kanugrahan')" class="mt-5 sm:mt-6 w-full py-2.5 rounded-2xl bg-white border border-slate-200 text-brand-navy hover:bg-brand-navy hover:text-white font-bold text-xs transition active:scale-95 min-h-[44px]">
+            Detail & Cek Jadwal
+          </button>
+        </div>
+
+        <!-- Unit 2: Kanugrahan Mart -->
+        <div class="group bg-slate-50 rounded-3xl p-5 sm:p-6 border border-slate-200/80 hover:border-brand-emerald hover:shadow-pam-hover transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-100 text-emerald-800 group-hover:bg-brand-emerald group-hover:text-white flex items-center justify-center text-xl sm:text-2xl transition duration-300 mb-4 sm:mb-5">
+              <i class="fa-solid fa-store"></i>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+              Perdagangan & Tani
+            </span>
+            <h3 class="text-base sm:text-lg font-bold text-brand-navy mt-3">Kanugrahan Mart</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Distribusi sarana produksi pertanian (pupuk bersubsidi, benih padi unggul), pangkalan resmi elpiji 3kg, dan sembako murah warga.
+            </p>
+            <ul class="mt-4 space-y-1.5 text-xs text-slate-500">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Jaminan harga eceran HET</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Pasokan pupuk tidak langka</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Layanan antar ke gubuk tani</li>
+            </ul>
+          </div>
+          <button onclick="showDetailUnit('Kanugrahan Mart')" class="mt-5 sm:mt-6 w-full py-2.5 rounded-2xl bg-white border border-slate-200 text-brand-navy hover:bg-brand-emerald hover:text-white font-bold text-xs transition active:scale-95 min-h-[44px]">
+            Lihat Katalog Tani
+          </button>
+        </div>
+
+        <!-- Unit 3: Pengelolaan Lingkungan & Sanitasi -->
+        <div class="group bg-slate-50 rounded-3xl p-5 sm:p-6 border border-slate-200/80 hover:border-teal-500 hover:shadow-pam-hover transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-teal-100 text-teal-800 group-hover:bg-teal-700 group-hover:text-white flex items-center justify-center text-xl sm:text-2xl transition duration-300 mb-4 sm:mb-5">
+              <i class="fa-solid fa-recycle"></i>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-teal-50 text-teal-800 border border-teal-200">
+              Lingkungan Bersih
+            </span>
+            <h3 class="text-base sm:text-lg font-bold text-brand-navy mt-3">Sanitasi & Bank Sampah</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Pengelolaan sampah terpadu dari rumah ke rumah menggunakan armada Tossa BUMDes, pemilahan bank sampah, dan pembuatan kompos.
+            </p>
+            <ul class="mt-4 space-y-1.5 text-xs text-slate-500">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-600"></i> Iuran ringan Rp 15.000 / bln</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-600"></i> Angkut rutin 3x seminggu</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-600"></i> Tabungan emas pilah plastik</li>
+            </ul>
+          </div>
+          <button onclick="showDetailUnit('Sanitasi & Bank Sampah')" class="mt-5 sm:mt-6 w-full py-2.5 rounded-2xl bg-white border border-slate-200 text-brand-navy hover:bg-teal-700 hover:text-white font-bold text-xs transition active:scale-95 min-h-[44px]">
+            Jadwal Armada Angkut
+          </button>
+        </div>
+
+        <!-- Unit 4: Wisata & Kemitraan UMKM Desa -->
+        <div class="group bg-slate-50 rounded-3xl p-5 sm:p-6 border border-slate-200/80 hover:border-amber-500 hover:shadow-pam-hover transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-100 text-amber-800 group-hover:bg-amber-600 group-hover:text-white flex items-center justify-center text-xl sm:text-2xl transition duration-300 mb-4 sm:mb-5">
+              <i class="fa-solid fa-shop"></i>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+              Pemberdayaan UMKM
+            </span>
+            <h3 class="text-base sm:text-lg font-bold text-brand-navy mt-3">Sentra UMKM & Sewa Tenda</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Pemberdayaan pengrajin & olahan pangan warga, serta jasa persewaan terop/tenda hajatan dan sound system inventaris BUMDes.
+            </p>
+            <ul class="mt-4 space-y-1.5 text-xs text-slate-500">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-600"></i> Subsidi sewa bagi warga desa</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-600"></i> Etalase oleh-oleh desa</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-600"></i> Pelatihan digital UMKM</li>
+            </ul>
+          </div>
+          <button onclick="showDetailUnit('Sentra UMKM & Sewa Tenda')" class="mt-5 sm:mt-6 w-full py-2.5 rounded-2xl bg-white border border-slate-200 text-brand-navy hover:bg-amber-600 hover:text-white font-bold text-xs transition active:scale-95 min-h-[44px]">
+            Katalog Sewa Tenda
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 8. TRANSPARANSI PADES & LAPORAN REALISASI ANGGARAN -->
+  <!-- ======================================================== -->
+  <section id="transparansi" class="py-12 sm:py-20 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+        <span class="text-xs font-bold text-brand-teal tracking-wider uppercase">Keterbukaan Informasi Publik (KIP)</span>
+        <h2 class="text-xl sm:text-3xl md:text-4xl font-extrabold text-brand-navy mt-1">Transparansi Laba & Alokasi PADes 2024</h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1 sm:mt-2">Setiap rupiah keuntungan BUMDes Graharta dipertanggungjawabkan dalam Musyawarah Desa (Musdes) dan disalurkan langsung ke kas Pemerintah Desa Kanugrahan.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
+        <!-- Progress Bar & Alokasi Visual -->
+        <div class="lg:col-span-7 bg-white p-5 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5 sm:space-y-6">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3 sm:pb-4">
+            <div>
+              <h3 class="font-bold text-slate-800 text-sm sm:text-base">Alokasi Laba Bersih BUMDes (2024)</h3>
+              <p class="text-xs text-slate-500">Total Laba Bersih Dihasilkan: <strong>Rp 285.500.000</strong></p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Tersalurkan 100%</span>
+          </div>
+
+          <!-- Bar 1: PADes -->
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
+              <span><i class="fa-solid fa-landmark text-brand-navy mr-1.5"></i> Pendapatan Asli Desa (Kas Pemdes)</span>
+              <span class="text-brand-navy">50% (Rp 142.750.000)</span>
+            </div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-brand-navy rounded-full" style="width: 50%"></div>
+            </div>
+            <span class="text-[10px] sm:text-[11px] text-slate-400">Digunakan untuk perbaikan jalan gang & jembatan tani.</span>
+          </div>
+
+          <!-- Bar 2: Penambahan Modal Kerja -->
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
+              <span><i class="fa-solid fa-arrows-spin text-brand-teal mr-1.5"></i> Cadangan Modal & Peremajaan Pipa</span>
+              <span class="text-brand-teal">25% (Rp 71.375.000)</span>
+            </div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-brand-teal rounded-full" style="width: 25%"></div>
+            </div>
+            <span class="text-[10px] sm:text-[11px] text-slate-400">Pengadaan pompa booster & meteran digital SNI.</span>
+          </div>
+
+          <!-- Bar 3: Dana Sosial & Beasiswa Desa -->
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
+              <span><i class="fa-solid fa-hand-holding-heart text-emerald-600 mr-1.5"></i> Dana Sosial & Beasiswa Anak Desa</span>
+              <span class="text-emerald-700">15% (Rp 42.825.000)</span>
+            </div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-brand-emerald rounded-full" style="width: 15%"></div>
+            </div>
+            <span class="text-[10px] sm:text-[11px] text-slate-400">Bantuan perlengkapan sekolah bagi 45 anak berprestasi.</span>
+          </div>
+
+          <!-- Bar 4: Jasa Produksi & Insentif Pengelola -->
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
+              <span><i class="fa-solid fa-user-gear text-amber-600 mr-1.5"></i> Insentif Pengelola & Petugas Lapangan</span>
+              <span class="text-amber-700">10% (Rp 28.550.000)</span>
+            </div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-amber-500 rounded-full" style="width: 10%"></div>
+            </div>
+            <span class="text-[10px] sm:text-[11px] text-slate-400">Apresiasi kinerja operator pompa dan teknisi kebersihan.</span>
+          </div>
+        </div>
+
+        <!-- Download Laporan Dokumen -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-gradient-to-br from-brand-navy to-brand-navyDark p-5 sm:p-8 rounded-3xl text-white shadow-xl space-y-4 sm:space-y-5">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-cyan-300 text-2xl">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-sm sm:text-base">Arsip Dokumen Laporan</h4>
+                <p class="text-xs text-slate-300">Dapat diunduh secara bebas oleh warga</p>
+              </div>
+            </div>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="p-3 rounded-2xl bg-white/10 hover:bg-white/15 transition flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-lines text-cyan-300 text-base"></i>
+                  <span>Laporan Keuangan Q3 2024 (PDF)</span>
+                </div>
+                <button onclick="downloadReport('Q3 2024')" class="px-2.5 py-1 rounded-xl bg-brand-teal hover:bg-cyan-500 text-white font-bold transition active:scale-95">
+                  Unduh
+                </button>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-white/10 hover:bg-white/15 transition flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-lines text-cyan-300 text-base"></i>
+                  <span>Hasil Musdes Pertanggungjawaban (PDF)</span>
+                </div>
+                <button onclick="downloadReport('Hasil Musdes 2024')" class="px-2.5 py-1 rounded-xl bg-brand-teal hover:bg-cyan-500 text-white font-bold transition active:scale-95">
+                  Unduh
+                </button>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-white/10 hover:bg-white/15 transition flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-lines text-cyan-300 text-base"></i>
+                  <span>SK Tarif Air Perdes No. 04/2021 (PDF)</span>
+                </div>
+                <button onclick="downloadReport('SK Tarif Perdes 04/2021')" class="px-2.5 py-1 rounded-xl bg-brand-teal hover:bg-cyan-500 text-white font-bold transition active:scale-95">
+                  Unduh
+                </button>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-white/15 text-center">
+              <p class="text-[10px] sm:text-[11px] text-slate-300">
+                <i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> Diaudit oleh Badan Permusyawaratan Desa (BPD) Kanugrahan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 9. PUSAT BERITA, EDUKASI & PENGUMUMAN RESMI -->
+  <!-- ======================================================== -->
+  <section id="berita" class="py-12 sm:py-24 bg-white border-b border-slate-200/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4">
+        <div>
+          <span class="text-xs font-bold text-brand-teal tracking-wider uppercase">Kabar Resmi & Warta Terkini</span>
+          <h2 class="text-xl sm:text-3xl md:text-4xl font-extrabold text-brand-navy mt-1">Pengumuman & Berita BUMDes</h2>
+        </div>
+        <!-- Filter Tabs -->
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+          <button onclick="filterNews('all')" id="btnNewsAll" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-white transition active:scale-95">Semua</button>
+          <button onclick="filterNews('gangguan')" id="btnNewsGangguan" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition active:scale-95">Perbaikan Pipa</button>
+          <button onclick="filterNews('kegiatan')" id="btnNewsKegiatan" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition active:scale-95">Kegiatan Desa</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6" id="newsGrid">
+        <!-- News Card 1 -->
+        <article data-category="gangguan" class="news-item bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden hover:shadow-md transition flex flex-col justify-between">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-center justify-between text-xs mb-3">
+              <span class="px-2.5 py-1 rounded bg-amber-100 text-amber-800 font-bold uppercase text-[10px]">Perawatan Rutin</span>
+              <span class="text-slate-400 font-medium text-[11px]">10 Oktober 2026</span>
+            </div>
+            <h3 class="text-sm sm:text-base font-bold text-brand-navy leading-snug hover:text-brand-teal transition cursor-pointer" onclick="readArticle(1)">
+              Pengurasan & Desinfeksi Bak Penampungan Utama Dusun Krajan
+            </h3>
+            <p class="text-xs text-slate-600 mt-2.5 line-clamp-3 leading-relaxed">
+              Tim teknis Tirta Kanugrahan melakukan sterilisasi berkala bak tandon volume 45.000 liter untuk memastikan baku mutu air tetap jernih dan higienis sesuai anjuran Dinas Kesehatan.
+            </p>
+          </div>
+          <div class="px-5 sm:px-6 pb-5 sm:pb-6 pt-2 border-t border-slate-100">
+            <button onclick="readArticle(1)" class="text-xs font-bold text-brand-navy hover:text-brand-teal flex items-center gap-1 active:scale-95">
+              Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+        </article>
+
+        <!-- News Card 2 -->
+        <article data-category="kegiatan" class="news-item bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden hover:shadow-md transition flex flex-col justify-between">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-center justify-between text-xs mb-3">
+              <span class="px-2.5 py-1 rounded bg-emerald-100 text-emerald-800 font-bold uppercase text-[10px]">Hasil Musyawarah</span>
+              <span class="text-slate-400 font-medium text-[11px]">28 September 2026</span>
+            </div>
+            <h3 class="text-sm sm:text-base font-bold text-brand-navy leading-snug hover:text-brand-teal transition cursor-pointer" onclick="readArticle(2)">
+              Musdes Penetapan Alokasi PADes BUMDes Graharta Tahun 2024
+            </h3>
+            <p class="text-xs text-slate-600 mt-2.5 line-clamp-3 leading-relaxed">
+              Disepakati bersama BPD dan tokoh masyarakat, laba bersih unit usaha dialokasikan untuk pemeliharaan jalan usaha tani serta beasiswa anak yatim dan dhuafa di Desa Kanugrahan.
+            </p>
+          </div>
+          <div class="px-5 sm:px-6 pb-5 sm:pb-6 pt-2 border-t border-slate-100">
+            <button onclick="readArticle(2)" class="text-xs font-bold text-brand-navy hover:text-brand-teal flex items-center gap-1 active:scale-95">
+              Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+        </article>
+
+        <!-- News Card 3 -->
+        <article data-category="gangguan" class="news-item bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden hover:shadow-md transition flex flex-col justify-between">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-center justify-between text-xs mb-3">
+              <span class="px-2.5 py-1 rounded bg-blue-100 text-brand-navy font-bold uppercase text-[10px]">Inovasi Digital</span>
+              <span class="text-slate-400 font-medium text-[11px]">15 September 2026</span>
+            </div>
+            <h3 class="text-sm sm:text-base font-bold text-brand-navy leading-snug hover:text-brand-teal transition cursor-pointer" onclick="readArticle(3)">
+              Peluncuran Sistem Cek Tagihan Air Mandiri Berbasis Smartphone
+            </h3>
+            <p class="text-xs text-slate-600 mt-2.5 line-clamp-3 leading-relaxed">
+              Kini warga Desa Kanugrahan tidak perlu lagi menunggu struk kertas fisik. Seluruh informasi pemakaian meter air bulanan dapat dipantau langsung melalui portal resmi BUMDes.
+            </p>
+          </div>
+          <div class="px-5 sm:px-6 pb-5 sm:pb-6 pt-2 border-t border-slate-100">
+            <button onclick="readArticle(3)" class="text-xs font-bold text-brand-navy hover:text-brand-teal flex items-center gap-1 active:scale-95">
+              Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 10. FAQ ACCORDION & PUSAT PENGADUAN INTEGRASI WA -->
+  <!-- ======================================================== -->
+  <section id="faq" class="py-12 sm:py-20 bg-brand-slateBg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <!-- Accordion FAQ -->
+        <div class="lg:col-span-7 space-y-5 sm:space-y-6">
+          <div>
+            <span class="text-xs font-bold text-brand-teal tracking-wider uppercase">Pertanyaan Sering Diajukan</span>
+            <h2 class="text-xl sm:text-3xl font-extrabold text-brand-navy mt-1">FAQ Layanan Warga</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">Ketahui prosedur pemakaian air, jadwal pencatatan meter, dan tata cara pembayaran.</p>
+          </div>
+
+          <div class="space-y-2.5 sm:space-y-3" id="faqAccordion">
+            <!-- Q1 -->
+            <div class="border border-slate-200 bg-white rounded-2xl overflow-hidden transition">
+              <button onclick="toggleFaq(1)" class="w-full px-4 sm:px-5 py-3.5 sm:py-4 text-left font-bold text-xs sm:text-sm text-brand-navy flex items-center justify-between gap-3 focus:outline-none min-h-[48px]">
+                <span>Kapan jadwal pencatatan meter air dan batas akhir bayar?</span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200" id="faqIcon1"></i>
+              </button>
+              <div id="faqAns1" class="hidden px-4 sm:px-5 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                Petugas pencatat meter BUMDes berkeliling setiap tanggal <strong>25 hingga 28 setiap bulannya</strong>. Tagihan terbit pada tanggal 1 bulan berikutnya, dan batas akhir pembayaran tanpa denda adalah tanggal <strong>20 setiap bulan</strong>.
+              </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="border border-slate-200 bg-white rounded-2xl overflow-hidden transition">
+              <button onclick="toggleFaq(2)" class="w-full px-4 sm:px-5 py-3.5 sm:py-4 text-left font-bold text-xs sm:text-sm text-brand-navy flex items-center justify-between gap-3 focus:outline-none min-h-[48px]">
+                <span>Bagaimana jika air di rumah saya keruh atau tekanannya kecil?</span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200" id="faqIcon2"></i>
+              </button>
+              <div id="faqAns2" class="hidden px-4 sm:px-5 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                Silakan gunakan menu <strong>Lapor Gangguan</strong> di website ini atau hubungi hotline WhatsApp kami di 0812-3456-7890. Tim teknisi Reaksi Cepat BUMDes akan memeriksa jaringan pipa sekunder dan melakukan flushing pipa dalam waktu maksimal 1x24 jam.
+              </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="border border-slate-200 bg-white rounded-2xl overflow-hidden transition">
+              <button onclick="toggleFaq(3)" class="w-full px-4 sm:px-5 py-3.5 sm:py-4 text-left font-bold text-xs sm:text-sm text-brand-navy flex items-center justify-between gap-3 focus:outline-none min-h-[48px]">
+                <span>Berapa rincian tarif per meter kubik (m³) air HIPPAM Kanugrahan?</span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200" id="faqIcon3"></i>
+              </button>
+              <div id="faqAns3" class="hidden px-4 sm:px-5 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                Sesuai Perdes Kanugrahan No. 04/2021:
+                <ul class="list-disc pl-5 mt-1 space-y-1">
+                  <li>Rumah Tangga: Rp 2.500 / m³ (Beban abonemen Rp 10.000 / bulan).</li>
+                  <li>Usaha / Dagang: Rp 3.500 / m³ (Beban abonemen Rp 15.000 / bulan).</li>
+                  <li>Tempat Ibadah / Fasilitas Umum: Rp 1.500 / m³ (Bebas abonemen).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="border border-slate-200 bg-white rounded-2xl overflow-hidden transition">
+              <button onclick="toggleFaq(4)" class="w-full px-4 sm:px-5 py-3.5 sm:py-4 text-left font-bold text-xs sm:text-sm text-brand-navy flex items-center justify-between gap-3 focus:outline-none min-h-[48px]">
+                <span>Di mana saja warga bisa membayar tagihan air dan iuran sampah?</span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200" id="faqIcon4"></i>
+              </button>
+              <div id="faqAns4" class="hidden px-4 sm:px-5 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                Warga dapat membayar secara online melalui scan <strong>QRIS BUMDes</strong> (mendukung BCA, Mandiri, BRI, Bank Jatim, Dana, Gopay), transfer rekening Bank Jatim BUMDes, atau tunai di loket kasir Kantor BUMDes Graharta setiap hari kerja.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Help Card & Maps Link -->
+        <div class="lg:col-span-5 bg-white p-5 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4 sm:space-y-5">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-brand-emerald flex items-center justify-center text-2xl">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm sm:text-base text-brand-navy">Layanan Langsung Warga</h3>
+              <p class="text-xs text-slate-500">Ada kendala darurat pipa bocor malam hari?</p>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Petugas piket pompa dan perbaikan pipa kami selalu siap melayani laporan Anda. Klik tombol di bawah untuk langsung terhubung ke staf operator.
+          </p>
+
+          <div class="space-y-2.5 sm:space-y-3 pt-1 sm:pt-2">
+            <a href="https://wa.me/6281234567890?text=Halo%20BUMDes%20Graharta%20Kanugrahan,%20saya%20butuh%20bantuan%20darurat%20air" target="_blank" class="w-full py-3.5 px-4 rounded-2xl bg-brand-emerald hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition active:scale-95 min-h-[48px]">
+              <i class="fa-brands fa-whatsapp text-lg"></i> Hubungi CS BUMDes di WhatsApp
+            </a>
+
+            <button onclick="openModal('pasangModal')" class="w-full py-3.5 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-95 min-h-[48px]">
+              <i class="fa-solid fa-wrench"></i> Formulir Sambungan Baru Online
+            </button>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 text-[11px] text-slate-500 space-y-1">
+            <p><i class="fa-solid fa-location-dot text-brand-teal mr-1.5"></i> Kantor: Jl. Raya Kanugrahan No. 12, Kec. Maduran, Lamongan</p>
+            <p><i class="fa-solid fa-envelope text-brand-teal mr-1.5"></i> Email: bumdes.graharta@kanugrahan.desa.id</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 11. FOOTER LENGKAP KORPORAT & KELEMBAGAAN DESA -->
+  <!-- ======================================================== -->
+  <footer class="bg-brand-navyDark text-slate-300 pt-12 sm:pt-16 pb-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-10 border-b border-slate-800">
+
+        <!-- Col 1: Identitas Kelembagaan -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-navy to-brand-teal flex items-center justify-center text-white shadow-md">
+              <i class="fa-solid fa-droplet text-2xl text-cyan-200"></i>
+            </div>
+            <div>
+              <span class="text-xl font-extrabold text-white tracking-tight">GRAHARTA</span>
+              <span class="text-xs block text-cyan-300 font-semibold tracking-wider uppercase">BUMDes Desa Kanugrahan</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+            Badan Usaha Milik Desa resmi pengelola air bersih HIPPAM Tirta Kanugrahan, perdagangan kebutuhan desa, sanitasi, dan pemberdayaan ekonomi masyarakat Desa Kanugrahan, Kecamatan Maduran, Kabupaten Lamongan.
+          </p>
+          <div class="pt-2 text-xs text-slate-400 space-y-1">
+            <p class="font-bold text-slate-300">Dasar Hukum & Legalitas:</p>
+            <p>&bull; SK Menkumham RI No. AHU-01928.AH.01.04.Tahun 2022</p>
+            <p>&bull; Peraturan Desa Kanugrahan No. 04 Tahun 2021</p>
+          </div>
+        </div>
+
+        <!-- Col 2: Unit Usaha & Layanan -->
+        <div class="lg:col-span-3 space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Unit Usaha & Layanan</h4>
+          <ul class="text-xs space-y-2 text-slate-400">
+            <li><a href="#quick-access" class="hover:text-cyan-300 transition">&bull; HIPPAM Tirta Kanugrahan</a></li>
+            <li><a href="#quick-access" class="hover:text-cyan-300 transition">&bull; Cek Tagihan Air Mandiri</a></li>
+            <li><a href="#unit-usaha" class="hover:text-cyan-300 transition">&bull; Kanugrahan Mart & Pupuk Tani</a></li>
+            <li><a href="#unit-usaha" class="hover:text-cyan-300 transition">&bull; Sanitasi & Armada Sampah</a></li>
+            <li><a href="#unit-usaha" class="hover:text-cyan-300 transition">&bull; Sewa Tenda & Sentra UMKM</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Akses Cepat & Transparansi -->
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Transparansi</h4>
+          <ul class="text-xs space-y-2 text-slate-400">
+            <li><a href="#transparansi" class="hover:text-cyan-300 transition">&bull; Realisasi PADes 2024</a></li>
+            <li><a href="#transparansi" class="hover:text-cyan-300 transition">&bull; Laporan Keuangan Kuartalan</a></li>
+            <li><a href="#berita" class="hover:text-cyan-300 transition">&bull; Hasil Musdes Tahunan</a></li>
+            <li><a href="#faq" class="hover:text-cyan-300 transition">&bull; Standar Baku Mutu Air</a></li>
+            <li><a href="#faq" class="hover:text-cyan-300 transition">&bull; FAQ & Prosedur</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Kontak & Posko Layanan -->
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Posko BUMDes</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Kompleks Balai Desa Kanugrahan, Kec. Maduran, Kab. Lamongan, Jawa Timur 62261
+          </p>
+          <div class="pt-2 text-xs space-y-1.5 text-slate-400">
+            <p><i class="fa-brands fa-whatsapp text-emerald-400 mr-1.5"></i> 0812-3456-7890</p>
+            <p><i class="fa-regular fa-clock text-cyan-300 mr-1.5"></i> 08:00 - 15:30 WIB</p>
+          </div>
+          <!-- Socials -->
+          <div class="flex items-center gap-2 pt-2">
+            <a href="#" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-brand-navy flex items-center justify-center text-slate-300 hover:text-white transition" title="Facebook">
+              <i class="fa-brands fa-facebook-f text-xs"></i>
+            </a>
+            <a href="#" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-brand-navy flex items-center justify-center text-slate-300 hover:text-white transition" title="Instagram">
+              <i class="fa-brands fa-instagram text-xs"></i>
+            </a>
+            <a href="#" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-brand-navy flex items-center justify-center text-slate-300 hover:text-white transition" title="YouTube">
+              <i class="fa-brands fa-youtube text-xs"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Copyright Bottom Bar -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3">
+        <p>&copy; 2026 BUMDes Graharta Kanugrahan. Hak cipta dilindungi undang-undang.</p>
+        <p class="flex items-center gap-1.5">
+          <span>Dikelola secara profesional untuk kemakmuran warga Desa Kanugrahan</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================== -->
+  <!-- ANDROID MATERIAL 3 NATIVE BOTTOM NAVIGATION BAR (MOBILE) -->
+  <!-- ======================================================== -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-slate-200/90 shadow-android-bottom py-1.5 px-3 flex justify-around items-center">
+    <!-- Item 1: Beranda -->
+    <a href="#beranda" id="bNavHome" onclick="setBottomNavActive('bNavHome')" class="bottom-nav-active flex flex-col items-center justify-center w-16 py-1 text-center transition active:scale-90">
+      <div class="nav-icon-pill w-12 h-7 rounded-full flex items-center justify-center transition-all">
+        <i class="fa-solid fa-house text-base"></i>
+      </div>
+      <span class="nav-label text-[10px] tracking-tight mt-0.5">Beranda</span>
+    </a>
+
+    <!-- Item 2: Tagihan Air -->
+    <button onclick="scrollToTab(1); setBottomNavActive('bNavBill')" id="bNavBill" class="flex flex-col items-center justify-center w-16 py-1 text-center transition active:scale-90 text-slate-500">
+      <div class="nav-icon-pill w-12 h-7 rounded-full flex items-center justify-center transition-all relative">
+        <i class="fa-solid fa-file-invoice-dollar text-base"></i>
+        <span class="absolute top-0.5 right-2 w-2 h-2 rounded-full bg-brand-teal"></span>
+      </div>
+      <span class="nav-label text-[10px] tracking-tight mt-0.5">Tagihan</span>
+    </button>
+
+    <!-- Item 3: Center Highlight Lapor Aduan WA -->
+    <button onclick="openModal('laporModal'); setBottomNavActive('bNavAduan')" id="bNavAduan" class="flex flex-col items-center justify-center -mt-4 transition active:scale-90">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-emerald to-emerald-500 text-white flex items-center justify-center text-xl shadow-lg shadow-emerald-500/30 border-2 border-white">
+        <i class="fa-solid fa-headset"></i>
+      </div>
+      <span class="nav-label text-[10px] tracking-tight mt-1 text-emerald-700 font-extrabold">Aduan WA</span>
+    </button>
+
+    <!-- Item 4: Toko Mart Desa -->
+    <button onclick="scrollToTab(4); setBottomNavActive('bNavMart')" id="bNavMart" class="flex flex-col items-center justify-center w-16 py-1 text-center transition active:scale-90 text-slate-500">
+      <div class="nav-icon-pill w-12 h-7 rounded-full flex items-center justify-center transition-all">
+        <i class="fa-solid fa-store text-base"></i>
+      </div>
+      <span class="nav-label text-[10px] tracking-tight mt-0.5">Toko Desa</span>
+    </button>
+
+    <!-- Item 5: Scan Meter / Menu -->
+    <button onclick="openModal('scannerModal'); setBottomNavActive('bNavScan')" id="bNavScan" class="flex flex-col items-center justify-center w-16 py-1 text-center transition active:scale-90 text-slate-500">
+      <div class="nav-icon-pill w-12 h-7 rounded-full flex items-center justify-center transition-all">
+        <i class="fa-solid fa-camera text-base"></i>
+      </div>
+      <span class="nav-label text-[10px] tracking-tight mt-0.5">Scan Meter</span>
+    </button>
+  </nav>
+
+  <!-- ======================================================== -->
+  <!-- FLOATING ACTION BUTTON (DESKTOP ONLY / SAFE POSITIONED) -->
+  <!-- ======================================================== -->
+  <div class="hidden lg:flex fixed bottom-6 right-6 z-40 flex-col gap-3 items-end">
+    <a href="https://wa.me/6281234567890?text=Halo%20BUMDes%20Graharta%20Kanugrahan,%20saya%20ingin%20layanan%20aduan%20cepat" target="_blank" class="group flex items-center gap-2.5 bg-brand-emerald hover:bg-emerald-700 text-white px-4 py-3 rounded-full shadow-2xl transition duration-200 border-2 border-white/50 active:scale-95">
+      <span class="w-2.5 h-2.5 rounded-full bg-white live-pulse"></span>
+      <i class="fa-brands fa-whatsapp text-2xl"></i>
+      <div class="text-left">
+        <span class="text-[10px] block font-medium opacity-90 leading-none">Petugas Piket</span>
+        <span class="text-xs font-bold leading-none">CS WhatsApp BUMDes</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 1: DETAIL INVOICE & CETAK TAGIHAN (ANDROID SHEET) -->
+  <!-- ======================================================== -->
+  <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="android-sheet-box bg-white rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-8 shadow-android-sheet sm:shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto space-y-4 sm:space-y-5 animate-fade-in">
+      <!-- Android Drag Handle on Mobile -->
+      <div class="w-12 h-1.5 bg-slate-300 rounded-full mx-auto mb-2 sm:hidden"></div>
+
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 sm:pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-blue-100 text-brand-navy flex items-center justify-center text-lg">
+            <i class="fa-solid fa-receipt"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-brand-navy">Struk Tagihan Air HIPPAM</h3>
+            <span class="text-xs text-slate-500" id="invNoTiket">No. Ref: INV-2024-KNG</span>
+          </div>
+        </div>
+        <button onclick="closeModal('invoiceModal')" class="text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition active:scale-95">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div id="invoiceContent" class="space-y-4 text-xs">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <div class="pt-3 sm:pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-2">
+        <button onclick="window.print()" class="w-full py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs flex items-center justify-center gap-2 transition active:scale-95 min-h-[48px]">
+          <i class="fa-solid fa-print"></i> Cetak Dokumen Struk
+        </button>
+        <button onclick="bayarViaQris()" class="w-full py-3.5 rounded-2xl bg-brand-emerald hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-md active:scale-95 min-h-[48px]">
+          <i class="fa-solid fa-qrcode"></i> Bayar Sekarang (QRIS / Bank)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 2: DETAIL UNIT USAHA (ANDROID SHEET) -->
+  <!-- ======================================================== -->
+  <div id="unitDetailModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="android-sheet-box bg-white rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-8 shadow-android-sheet sm:shadow-2xl border border-slate-200 space-y-4 animate-fade-in max-h-[85vh] overflow-y-auto">
+      <!-- Android Drag Handle on Mobile -->
+      <div class="w-12 h-1.5 bg-slate-300 rounded-full mx-auto mb-2 sm:hidden"></div>
+
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base sm:text-lg font-extrabold text-brand-navy" id="unitModalTitle">Detail Unit Usaha</h3>
+        <button onclick="closeModal('unitDetailModal')" class="text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 active:scale-95">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div id="unitModalBody" class="text-xs text-slate-600 space-y-3 leading-relaxed">
+        <!-- Dynamic via JS -->
+      </div>
+      <div class="pt-3 border-t border-slate-100 text-right">
+        <button onclick="closeModal('unitDetailModal')" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-brand-navy text-white text-xs font-bold active:scale-95 min-h-[44px]">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 3: LAPOR GANGGUAN POP-UP (ANDROID SHEET) -->
+  <!-- ======================================================== -->
+  <div id="laporModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="android-sheet-box bg-white rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-8 shadow-android-sheet sm:shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] overflow-y-auto animate-fade-in">
+      <!-- Android Drag Handle on Mobile -->
+      <div class="w-12 h-1.5 bg-slate-300 rounded-full mx-auto mb-2 sm:hidden"></div>
+
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-brand-navy">Layanan Aduan Warga Cepat</h3>
+            <p class="text-[11px] text-slate-500">Kirim kendala langsung ke WhatsApp Petugas Piket</p>
+          </div>
+        </div>
+        <button onclick="closeModal('laporModal')" class="text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 active:scale-95">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleModalLapor(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Nama Lengkap Pelapor</label>
+          <input type="text" id="mNama" required placeholder="Nama Anda" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-xs min-h-[48px]">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Jenis Kendala</label>
+          <select id="mKategori" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-xs font-semibold min-h-[48px]">
+            <option value="Pipa Bocor / Rembes">Pipa Bocor / Rembes</option>
+            <option value="Debit Air Sangat Lemah">Debit Air Sangat Lemah / Mati</option>
+            <option value="Air Keruh atau Berbau">Air Keruh atau Berbau</option>
+            <option value="Meteran Rusak / Bocor">Meteran Rusak / Bocor</option>
+            <option value="Pengaduan Iuran / Administrasi">Pengaduan Iuran / Administrasi</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Dusun & Titik Lokasi Masalah</label>
+          <input type="text" id="mLokasi" required placeholder="Contoh: Depan Gapura RT 02 Dusun Timur" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-xs min-h-[48px]">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Rincian Keluhan</label>
+          <textarea id="mKet" rows="3" required placeholder="Jelaskan sejak jam berapa air tidak keluar..." class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-xs"></textarea>
+        </div>
+        <div class="pt-2">
+          <button type="submit" class="w-full py-3.5 rounded-2xl bg-brand-emerald hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-95 min-h-[48px]">
+            <i class="fa-brands fa-whatsapp text-base"></i> Teruskan ke WhatsApp CS BUMDes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 4: PASANG SAMBUNGAN BARU (ANDROID SHEET) -->
+  <!-- ======================================================== -->
+  <div id="pasangModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="android-sheet-box bg-white rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-8 shadow-android-sheet sm:shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] overflow-y-auto animate-fade-in">
+      <!-- Android Drag Handle on Mobile -->
+      <div class="w-12 h-1.5 bg-slate-300 rounded-full mx-auto mb-2 sm:hidden"></div>
+
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-2xl bg-blue-100 text-brand-navy flex items-center justify-center text-lg">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-brand-navy">Formulir Sambungan Baru</h3>
+            <p class="text-[11px] text-slate-500">Pemasangan Meteran Air HIPPAM Desa Kanugrahan</p>
+          </div>
+        </div>
+        <button onclick="closeModal('pasangModal')" class="text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 active:scale-95">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleModalPasang(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Nama Pemohon</label>
+          <input type="text" id="mPasangNama" required placeholder="Nama Kepala Keluarga" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-xs min-h-[48px]">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Nomor WhatsApp Aktif</label>
+          <input type="tel" id="mPasangWa" required placeholder="08xxxxxxxxxx" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-xs min-h-[48px]">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Alamat Dusun & RT/RW</label>
+          <input type="text" id="mPasangAlamat" required placeholder="Contoh: RT 03 RW 01 Dusun Krajan" class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-brand-teal text-xs min-h-[48px]">
+        </div>
+        <div class="p-3 bg-blue-50 border border-blue-200 rounded-2xl text-[11px] text-brand-navy">
+          <p class="font-bold">Estimasi Biaya Pasang Baru:</p>
+          <p class="text-slate-600 mt-0.5">Rumah Tangga: Rp 450.000 (Termasuk Meteran SNI, Pipa 10 Meter, Stop Kran, & Upah Pasang Teknisi).</p>
+        </div>
+        <div class="pt-2">
+          <button type="submit" class="w-full py-3.5 rounded-2xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-95 min-h-[48px]">
+            <i class="fa-solid fa-check"></i> Ajukan Pemasangan Baru
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 5: SIMULASI SCAN KAMERA METERAN AIR (ANDROID EXCLUSIVE) -->
+  <!-- ======================================================== -->
+  <div id="scannerModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="android-sheet-box bg-slate-900 text-white rounded-t-3xl sm:rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-android-sheet border border-slate-700 space-y-4 animate-fade-in">
+      <!-- Android Drag Handle on Mobile -->
+      <div class="w-12 h-1.5 bg-slate-600 rounded-full mx-auto mb-2 sm:hidden"></div>
+
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-2xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-extrabold text-white">Smart Meter Scanner</h3>
+            <p class="text-[10px] text-slate-400">Pindai angka kubikasi meteran air desa otomatis</p>
+          </div>
+        </div>
+        <button onclick="closeModal('scannerModal')" class="text-slate-400 hover:text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-800 active:scale-95">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Kamera Viewfinder Simulated Box -->
+      <div class="relative w-full h-56 bg-black rounded-2xl overflow-hidden border-2 border-dashed border-cyan-400/60 flex flex-col items-center justify-center">
+        <!-- Laser Scanner Bar -->
+        <div class="absolute w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent laser-line shadow-[0_0_12px_#38bdf8]"></div>
+
+        <!-- Meter Counter Mockup in camera -->
+        <div class="bg-slate-800/90 border border-white/20 px-6 py-3 rounded-xl text-center shadow-lg backdrop-blur-sm">
+          <span class="text-[9px] uppercase tracking-wider text-slate-400 block">Indikator Angka Meter</span>
+          <div class="flex items-center gap-1 font-mono text-2xl font-black tracking-widest text-white mt-1">
+            <span class="bg-black/60 px-1.5 py-0.5 rounded text-cyan-300">0</span>
+            <span class="bg-black/60 px-1.5 py-0.5 rounded text-cyan-300">0</span>
+            <span class="bg-black/60 px-1.5 py-0.5 rounded text-cyan-300">1</span>
+            <span class="bg-black/60 px-1.5 py-0.5 rounded text-cyan-300">9</span>
+            <span class="bg-red-900/80 px-1.5 py-0.5 rounded text-red-300">8</span>
+          </div>
+          <span class="text-[10px] text-emerald-400 block mt-1"><i class="fa-solid fa-circle-check"></i> Angka terdeteksi: 198 m³</span>
+        </div>
+
+        <div class="absolute bottom-2 text-[10px] text-slate-400 bg-black/60 px-3 py-1 rounded-full">
+          Arahkan kamera ke jendela kaca meteran air
+        </div>
+      </div>
+
+      <div class="space-y-2 pt-1 text-xs">
+        <button onclick="applyScannedMeter()" class="w-full py-3.5 rounded-2xl bg-brand-teal hover:bg-cyan-500 text-white font-bold flex items-center justify-center gap-2 shadow-md active:scale-95 min-h-[48px]">
+          <i class="fa-solid fa-bolt"></i> Gunakan Angka Terdeteksi (Pak Sutrisno: 198 m³)
+        </button>
+        <button onclick="closeModal('scannerModal')" class="w-full py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold active:scale-95">
+          Tutup Pemindai
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 6: ANDROID NOTIFICATION TRAY (NOTIFIKASI DESA) -->
+  <!-- ======================================================== -->
+  <div id="notifModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="android-sheet-box bg-white rounded-t-3xl sm:rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-android-sheet border border-slate-200 space-y-4 animate-fade-in max-h-[85vh] overflow-y-auto">
+      <!-- Android Drag Handle on Mobile -->
+      <div class="w-12 h-1.5 bg-slate-300 rounded-full mx-auto mb-2 sm:hidden"></div>
+
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-2xl bg-blue-100 text-brand-navy flex items-center justify-center text-lg">
+            <i class="fa-solid fa-bell"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-extrabold text-brand-navy">Pemberitahuan Warga</h3>
+            <p class="text-[10px] text-slate-500">Kabar operasional & pengumuman resmi</p>
+          </div>
+        </div>
+        <button onclick="closeModal('notifModal')" class="text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 active:scale-95">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="space-y-2.5 text-xs">
+        <div class="p-3.5 rounded-2xl bg-blue-50/80 border border-blue-200/60 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-brand-navy">Tagihan Air Oktober Terbit</span>
+            <span class="text-[10px] text-slate-400">Hari ini</span>
+          </div>
+          <p class="text-slate-600 text-[11px]">Tagihan pemakaian air bulan Oktober 2026 sudah dapat dicek mandiri. Batas akhir pembayaran bebas denda tgl 20.</p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-emerald-800">Distribusi Air Lancar Normal</span>
+            <span class="text-[10px] text-slate-400">Kemarin</span>
+          </div>
+          <p class="text-slate-600 text-[11px]">Pemeliharaan filter bak induk Dusun Krajan telah selesai. Tekanan kembali stabil 3.0 Bar di seluruh dusun.</p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/60 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-amber-800">Pasokan Pupuk Subsidi Tiba</span>
+            <span class="text-[10px] text-slate-400">3 hari lalu</span>
+          </div>
+          <p class="text-slate-600 text-[11px]">Kanugrahan Mart menerima alokasi pupuk organik dan NPK subsidi untuk kelompok tani Dusun Sukomulyo.</p>
+        </div>
+      </div>
+
+      <div class="pt-2 text-center">
+        <button onclick="closeModal('notifModal')" class="w-full py-3 rounded-2xl bg-brand-navy text-white font-bold text-xs active:scale-95 min-h-[44px]">
+          Tutup Pemberitahuan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- ANDROID SNACKBAR / TOAST NOTIFICATION -->
+  <!-- ======================================================== -->
+  <div id="toastNotification" class="fixed bottom-20 lg:bottom-8 left-4 right-4 sm:left-auto sm:right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 max-w-sm pointer-events-none mx-auto sm:mx-0">
+    <div class="bg-brand-navy text-white px-5 py-4 rounded-2xl shadow-2xl border border-cyan-400/40 flex items-center gap-3">
+      <div id="toastIcon" class="w-8 h-8 rounded-xl bg-cyan-400/20 text-cyan-300 flex items-center justify-center shrink-0">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <div>
+        <h4 id="toastTitle" class="font-bold text-xs leading-none">Notifikasi</h4>
+        <p id="toastMessage" class="text-[11px] text-slate-300 mt-1">Pesan berhasil diproses.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- JAVASCRIPT LOGIC & DUMMY DATABASE INTERAKTIF -->
+  <!-- ======================================================== -->
+  <script>
+    // --- 1. Database Dummy Pelanggan HIPPAM Kanugrahan ---
+    const databasePelanggan = {
+      'KNG-2024-001': {
+        id: 'KNG-2024-001',
+        nama: 'Sutrisno, S.Pd',
+        dusun: 'Dusun Kanugrahan Timur (RT 02 / RW 01)',
+        golongan: 'Rumah Tangga (R-1)',
+        periode: 'Oktober 2026',
+        meterLalu: 182,
+        meterKini: 198,
+        pakaim3: 16,
+        tarifPerm3: 2500,
+        biayaPemakaian: 40000,
+        abonemen: 10000,
+        iuranSampah: 15000,
+        denda: 0,
+        total: 65000,
+        status: 'BELUM LUNAS',
+        jatuhTempo: '20 Oktober 2026'
+      },
+      'KNG-2024-042': {
+        id: 'KNG-2024-042',
+        nama: 'Ibu Sumini',
+        dusun: 'Dusun Kanugrahan Barat (RT 06 / RW 02)',
+        golongan: 'Rumah Tangga (R-1)',
+        periode: 'Oktober 2026',
+        meterLalu: 94,
+        meterKini: 105,
+        pakaim3: 11,
+        tarifPerm3: 2500,
+        biayaPemakaian: 27500,
+        abonemen: 10000,
+        iuranSampah: 15000,
+        denda: 0,
+        total: 52500,
+        status: 'LUNAS',
+        jatuhTempo: '20 Oktober 2026',
+        tglBayar: '04 Oktober 2026 (via QRIS Desa)'
+      },
+      'KNG-2024-108': {
+        id: 'KNG-2024-108',
+        nama: 'Hendra Setiawan (Warung Berkah)',
+        dusun: 'Dusun Krajan Tengah (RT 10 / RW 03)',
+        golongan: 'Usaha Niaga (U-1)',
+        periode: 'Oktober 2026',
+        meterLalu: 310,
+        meterKini: 345,
+        pakaim3: 35,
+        tarifPerm3: 3500,
+        biayaPemakaian: 122500,
+        abonemen: 15000,
+        iuranSampah: 20000,
+        denda: 5000,
+        total: 162500,
+        status: 'BELUM LUNAS (Tunggakan 1 Bln)',
+        jatuhTempo: '20 Oktober 2026'
+      }
+    };
+
+    let activeInvoiceData = null;
+
+    // --- 2. Tab Navigation (PAM JAYA Style) ---
+    function switchTab(tabIndex) {
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById(`tabBtn${i}`);
+        const content = document.getElementById(`tabContent${i}`);
+        if (i === tabIndex) {
+          btn.className = 'pam-tab-active py-3.5 sm:py-4 px-2 sm:px-5 flex items-center justify-center gap-2 transition text-center min-h-[52px] sm:min-h-[56px] border-b-2 font-bold';
+          content.classList.remove('hidden');
+          content.classList.add('block');
+        } else {
+          btn.className = 'pam-tab-inactive py-3.5 sm:py-4 px-2 sm:px-5 flex items-center justify-center gap-2 transition text-center min-h-[52px] sm:min-h-[56px] border-b-2 border-transparent font-bold';
+          content.classList.add('hidden');
+          content.classList.remove('block');
+        }
+      }
+    }
+
+    function scrollToTab(tabIndex) {
+      switchTab(tabIndex);
+      const el = document.getElementById('quick-access');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // --- 3. Fill Search Helper ---
+    function fillSearchId(id) {
+      document.getElementById('inputNoSambungan').value = id;
+      handleCekTagihan(new Event('submit'));
+    }
+
+    function resetCekTagihan() {
+      document.getElementById('inputNoSambungan').value = '';
+      document.getElementById('billResultBox').classList.add('hidden');
+    }
+
+    // --- 4. Cek Tagihan Handler ---
+    function handleCekTagihan(e) {
+      e.preventDefault();
+      const rawInput = document.getElementById('inputNoSambungan').value.trim().toUpperCase();
+      const resultBox = document.getElementById('billResultBox');
+
+      if (!rawInput) {
+        showToast('Perhatian', 'Silakan masukkan No. Sambungan atau ID Pelanggan.');
+        return;
+      }
+
+      let data = databasePelanggan[rawInput];
+      if (!data) {
+        data = {
+          id: rawInput,
+          nama: 'Warga Kanugrahan (' + rawInput + ')',
+          dusun: 'Dusun Krajan RT 02 / RW 01',
+          golongan: 'Rumah Tangga (R-1)',
+          periode: 'Oktober 2026',
+          meterLalu: 110,
+          meterKini: 124,
+          pakaim3: 14,
+          tarifPerm3: 2500,
+          biayaPemakaian: 35000,
+          abonemen: 10000,
+          iuranSampah: 15000,
+          denda: 0,
+          total: 60000,
+          status: 'BELUM LUNAS',
+          jatuhTempo: '20 Oktober 2026'
+        };
+      }
+
+      activeInvoiceData = data;
+      const isLunas = data.status.includes('LUNAS') && !data.status.includes('BELUM');
+
+      resultBox.innerHTML = `
+        <div class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-3">
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Hasil Pencarian Pelanggan</span>
+              <h4 class="text-base sm:text-lg font-extrabold text-brand-navy">${data.nama}</h4>
+              <p class="text-xs text-slate-500"><i class="fa-solid fa-location-dot text-brand-teal mr-1"></i>${data.dusun} | ID: <span class="font-bold text-brand-navy">${data.id}</span></p>
+            </div>
+            <div class="sm:text-right">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${isLunas ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'}">
+                <i class="fa-solid ${isLunas ? 'fa-check-circle' : 'fa-clock'}"></i> ${data.status}
+              </span>
+              <p class="text-[11px] text-slate-400 mt-1">Periode: ${data.periode}</p>
+            </div>
+          </div>
+
+          <!-- Grid Rincian Meter Air -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 text-xs">
+            <div>
+              <span class="text-slate-400 block text-[10px]">Stand Meter Lalu</span>
+              <span class="font-bold text-slate-700">${data.meterLalu} m³</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[10px]">Stand Meter Kini</span>
+              <span class="font-bold text-slate-700">${data.meterKini} m³</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[10px]">Total Pemakaian</span>
+              <span class="font-extrabold text-brand-teal">${data.pakaim3} m³</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[10px]">Tarif per m³</span>
+              <span class="font-bold text-slate-700">Rp ${data.tarifPerm3.toLocaleString('id-ID')}</span>
+            </div>
+          </div>
+
+          <!-- Total & Actions -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+            <div>
+              <span class="text-xs text-slate-500">Total Tagihan (Termasuk Sampah & Abonemen):</span>
+              <p class="text-xl sm:text-2xl font-black text-brand-navy">Rp ${data.total.toLocaleString('id-ID')}</p>
+              ${data.tglBayar ? `<span class="text-[11px] text-emerald-600 font-semibold"><i class="fa-solid fa-check"></i> ${data.tglBayar}</span>` : `<span class="text-[11px] text-amber-600 font-medium">Batas Bayar: ${data.jatuhTempo}</span>`}
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <button onclick="openInvoiceModal()" class="w-full sm:w-auto px-4 py-3 rounded-2xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 min-h-[44px]">
+                <i class="fa-solid fa-receipt"></i> Rincian Struk
+              </button>
+              ${!isLunas ? `
+              <button onclick="bayarViaQris()" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-brand-emerald hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm active:scale-95 min-h-[44px]">
+                <i class="fa-solid fa-qrcode"></i> Bayar QRIS / Kasir
+              </button>
+              ` : `
+              <button onclick="openInvoiceModal()" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-brand-navy hover:bg-brand-navyLight text-white font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 min-h-[44px]">
+                <i class="fa-solid fa-download"></i> Unduh Bukti Lunas
+              </button>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+
+      resultBox.classList.remove('hidden');
+      showToast('Pencarian Berhasil', `Data tagihan untuk ID ${data.id} berhasil ditemukan.`);
+    }
+
+    // --- 5. Scanner Simulator Handler ---
+    function applyScannedMeter() {
+      closeModal('scannerModal');
+      fillSearchId('KNG-2024-001');
+      showToast('Pemindai Sukses', 'Angka 198 m³ berhasil terbaca & disinkronkan ke ID Pak Sutrisno.');
+    }
+
+    // --- 6. Modal Controllers ---
+    function openModal(modalId) {
+      const m = document.getElementById(modalId);
+      if (m) {
+        m.classList.remove('hidden');
+        m.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+      }
+    }
+
+    function closeModal(modalId) {
+      const m = document.getElementById(modalId);
+      if (m) {
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    function openInvoiceModal() {
+      if (!activeInvoiceData) return;
+      const d = activeInvoiceData;
+      const isLunas = d.status.includes('LUNAS') && !d.status.includes('BELUM');
+
+      document.getElementById('invNoTiket').innerText = `No. Tagihan: INV/KNG/${d.id}/${d.periode.replace(' ', '/')}`;
+      document.getElementById('invoiceContent').innerHTML = `
+        <div class="border p-3.5 sm:p-4 rounded-2xl bg-slate-50 space-y-2">
+          <div class="flex justify-between pb-2 border-b border-slate-200">
+            <span class="font-bold text-slate-800">Nama Pelanggan</span>
+            <span class="font-bold text-brand-navy">${d.nama}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">ID Pelanggan</span>
+            <span class="font-semibold text-slate-700">${d.id}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">Golongan Tarif</span>
+            <span class="font-semibold text-slate-700">${d.golongan}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">Alamat</span>
+            <span class="font-semibold text-slate-700">${d.dusun}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">Bulan Rekening</span>
+            <span class="font-semibold text-slate-700">${d.periode}</span>
+          </div>
+        </div>
+
+        <div class="space-y-1.5 pt-1">
+          <p class="font-bold text-slate-700">Rincian Perhitungan Biaya:</p>
+          <div class="flex justify-between text-slate-600">
+            <span>Air Bersih (${d.pakaim3} m³ x Rp ${d.tarifPerm3.toLocaleString('id-ID')})</span>
+            <span>Rp ${d.biayaPemakaian.toLocaleString('id-ID')}</span>
+          </div>
+          <div class="flex justify-between text-slate-600">
+            <span>Biaya Pemeliharaan Meter & Abonemen</span>
+            <span>Rp ${d.abonemen.toLocaleString('id-ID')}</span>
+          </div>
+          <div class="flex justify-between text-slate-600">
+            <span>Iuran Kebersihan Lingkungan (Sampah)</span>
+            <span>Rp ${d.iuranSampah.toLocaleString('id-ID')}</span>
+          </div>
+          ${d.denda > 0 ? `
+          <div class="flex justify-between text-red-600 font-semibold">
+            <span>Denda Keterlambatan</span>
+            <span>Rp ${d.denda.toLocaleString('id-ID')}</span>
+          </div>
+          ` : ''}
+          <div class="flex justify-between font-extrabold text-sm text-brand-navy pt-2 border-t border-slate-200">
+            <span>TOTAL DIBAYAR</span>
+            <span>Rp ${d.total.toLocaleString('id-ID')}</span>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl ${isLunas ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-amber-50 text-amber-800 border border-amber-200'}">
+          <p class="font-bold">Status: ${d.status}</p>
+          <p class="text-[11px] mt-0.5">${isLunas ? (d.tglBayar || 'Pembayaran telah terverifikasi.') : 'Silakan lakukan pembayaran sebelum tanggal 20 agar tidak terkena denda.'}</p>
+        </div>
+      `;
+
+      openModal('invoiceModal');
+    }
+
+    function bayarViaQris() {
+      if (!activeInvoiceData) return;
+      const d = activeInvoiceData;
+      const nominal = d.total.toLocaleString('id-ID');
+      const textWA = encodeURIComponent(`Halo BUMDes Graharta Kanugrahan, saya ingin konfirmasi pembayaran tagihan air HIPPAM:\n- ID Pelanggan: ${d.id}\n- Nama: ${d.nama}\n- Periode: ${d.periode}\n- Total: Rp ${nominal}\nMohon informasi barcode QRIS atau rekening Bank Jatim / BSI BUMDes.`);
+      window.open(`https://wa.me/6281234567890?text=${textWA}`, '_blank');
+      showToast('Kanal Pembayaran', 'Membuka WhatsApp BUMDes untuk konfirmasi barcode QRIS.');
+    }
+
+    // --- 7. Form Handlers dengan WhatsApp Formatter Otomatis ---
+    function handlePengajuanBaru(e) {
+      e.preventDefault();
+      const nama = document.getElementById('pasangNama').value;
+      const nik = document.getElementById('pasangNik').value;
+      const dusun = document.getElementById('pasangDusun').value;
+      const wa = document.getElementById('pasangWa').value;
+      const paket = document.querySelector('input[name="paketPasang"]:checked').value;
+      const ticket = 'PASANG-' + Date.now().toString().slice(-5);
+
+      const msg = encodeURIComponent(`*FORMULIR PENDAFTARAN SAMBUNGAN AIR HIPPAM BARU*\n` +
+        `No. Tiket: #${ticket}\n` +
+        `Nama Pemohon: ${nama}\n` +
+        `NIK: ${nik}\n` +
+        `Alamat: ${dusun}\n` +
+        `No. WhatsApp: ${wa}\n` +
+        `Pilihan Paket: ${paket}\n\n` +
+        `Mohon dijadwalkan survei lokasi pipa teknisi BUMDes Graharta Kanugrahan. Terima kasih.`);
+
+      window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
+      showToast('Pendaftaran Terkirim', `Tiket #${ticket} diteruskan ke WhatsApp Layanan BUMDes.`);
+      e.target.reset();
+    }
+
+    function handleKirimAduan(e) {
+      e.preventDefault();
+      const nama = document.getElementById('laporNama').value;
+      const kategori = document.getElementById('laporKategori').value;
+      const lokasi = document.getElementById('laporLokasi').value;
+      const wa = document.getElementById('laporWa').value;
+      const ket = document.getElementById('laporDeskripsi').value;
+      const ticket = 'ADU-KNG-' + Date.now().toString().slice(-6);
+
+      const msg = encodeURIComponent(`*LAPORAN ADUAN GANGGUAN BUMDES GRAHARTA*\n` +
+        `No. Tiket: #${ticket}\n` +
+        `Kategori: ${kategori}\n` +
+        `Nama Warga: ${nama}\n` +
+        `No. HP/WA: ${wa}\n` +
+        `Titik Lokasi: ${lokasi}\n` +
+        `Rincian Gangguan: ${ket}\n\n` +
+        `Mohon bantuan tindak lanjut segera dari tim teknis. Terima kasih.`);
+
+      window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
+      showToast('Aduan Terkirim', `Tiket Aduan #${ticket} dibuat & diteruskan ke CS WhatsApp.`);
+      e.target.reset();
+    }
+
+    function handleModalLapor(e) {
+      e.preventDefault();
+      const nama = document.getElementById('mNama').value;
+      const kat = document.getElementById('mKategori').value;
+      const lokasi = document.getElementById('mLokasi').value;
+      const ket = document.getElementById('mKet').value;
+      const ticket = 'ADU-KNG-' + Date.now().toString().slice(-6);
+
+      const msg = encodeURIComponent(`*LAPOR GANGGUAN / KELUHAN (PORTAL BUMDES)*\n` +
+        `No. Tiket: #${ticket}\n` +
+        `Nama: ${nama}\n` +
+        `Kategori: ${kat}\n` +
+        `Lokasi: ${lokasi}\n` +
+        `Uraian: ${ket}\n\n` +
+        `Mohon segera ditangani tim teknis BUMDes.`);
+
+      window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
+      closeModal('laporModal');
+      showToast('Laporan Terkirim', `Tiket #${ticket} diteruskan ke WhatsApp.`);
+      e.target.reset();
+    }
+
+    function handleModalPasang(e) {
+      e.preventDefault();
+      const nama = document.getElementById('mPasangNama').value;
+      const wa = document.getElementById('mPasangWa').value;
+      const alamat = document.getElementById('mPasangAlamat').value;
+
+      const msg = encodeURIComponent(`*PENGAJUAN SAMBUNGAN METERAN BARU*\n` +
+        `Nama: ${nama}\n` +
+        `WhatsApp: ${wa}\n` +
+        `Alamat: ${alamat}\n\n` +
+        `Mohon informasi jadwal survei teknisi BUMDes Kanugrahan.`);
+
+      window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
+      closeModal('pasangModal');
+      showToast('Pengajuan Terkirim', 'Formulir diteruskan ke tim teknis BUMDes.');
+      e.target.reset();
+    }
+
+    function orderProduk(namaProduk) {
+      const msg = encodeURIComponent(`Halo Kanugrahan Mart BUMDes, saya ingin memesan produk: *${namaProduk}*.\nMohon info ketersediaan stok dan pengiriman ke alamat rumah saya di Desa Kanugrahan.`);
+      window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
+    }
+
+    function downloadReport(title) {
+      showToast('Unduh Dokumen', `Mengunduh berkas salinan resmi: ${title}...`);
+      setTimeout(() => {
+        alert(`Dokumen "${title}" berhasil disiapkan untuk warga Desa Kanugrahan.`);
+      }, 500);
+    }
+
+    // --- 8. Detail Unit Usaha Modals ---
+    function showDetailUnit(unitName) {
+      const title = document.getElementById('unitModalTitle');
+      const body = document.getElementById('unitModalBody');
+      title.innerText = unitName;
+
+      if (unitName === 'Tirta Kanugrahan') {
+        body.innerHTML = `
+          <p><strong>Tirta Kanugrahan</strong> merupakan unit utilitas air bersih HIPPAM yang mengelola 2 sumur bor dalam (kedalaman 85 meter) dan 1 bak gravitasi sentral dengan kapasitas 45.000 liter.</p>
+          <p><strong>Spesifikasi & Standar Teknis:</strong></p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Kualitas air: Uji laboratorium berkala Bebas E.Coli, TDS 110 mg/L (Standar Kemenkes).</li>
+            <li>Pompa: Submersible 7.5 HP dengan genset otomatis cadangan saat PLN padam.</li>
+            <li>Cakupan pipa: 4 Dusun (Kanugrahan Timur, Barat, Krajan, Sukomulyo).</li>
+          </ul>
+          <p class="p-3 bg-blue-50 text-brand-navy rounded-2xl font-medium">Bagi warga yang mengalami gangguan air, tim teknis siaga 24 jam untuk perbaikan kebocoran pipa jaringan.</p>
+        `;
+      } else if (unitName === 'Kanugrahan Mart') {
+        body.innerHTML = `
+          <p><strong>Kanugrahan Mart</strong> bergerak dalam pemenuhan sarana produksi pertanian dan kebutuhan pangan murah warga.</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Pangkalan resmi LPG 3kg ber-HET Rp 18.000 untuk mencegah spekulasi harga eceran.</li>
+            <li>Penyaluran pupuk organik hasil olahan sampah desa & pupuk subsidi RDKK.</li>
+            <li>Pengadaan benih padi unggul bersertifikat Dinas Pertanian Lamongan.</li>
+          </ul>
+        `;
+      } else if (unitName === 'Sanitasi & Bank Sampah') {
+        body.innerHTML = `
+          <p><strong>Sanitasi & Pengelolaan Lingkungan</strong> mengoperasikan 2 unit Tossa roda tiga yang mengangkut sampah domestik dari seluruh rumah warga setiap Selasa, Kamis, dan Sabtu.</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Iuran kebersihan sangat terjangkau: Rp 15.000 / KK / bulan.</li>
+            <li>Sampah anorganik ditabung warga di Bank Sampah Berkah Kanugrahan.</li>
+            <li>Sampah organik diolah menjadi pupuk kompos untuk tanaman pekarangan.</li>
+          </ul>
+        `;
+      } else {
+        body.innerHTML = `
+          <p><strong>Sentra UMKM & Sewa Tenda</strong> memberikan kemudahan logistik bagi warga desa yang menyelenggarakan hajatan nikahan, syukuran, maupun peringatan hari besar.</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Inventaris: Terop plafon dekorasi, panggung, 300 kursi susun, dan sound system.</li>
+            <li>Harga sewa warga desa mendapat potongan subsidi 25% dibanding harga komersial luar desa.</li>
+            <li>Etalase pameran produk kripik, telur asin, dan anyaman bambu khas Kanugrahan.</li>
+          </ul>
+        `;
+      }
+
+      openModal('unitDetailModal');
+    }
+
+    // --- 9. News Filter ---
+    function filterNews(cat) {
+      const items = document.querySelectorAll('.news-item');
+      const btnAll = document.getElementById('btnNewsAll');
+      const btnG = document.getElementById('btnNewsGangguan');
+      const btnK = document.getElementById('btnNewsKegiatan');
+
+      [btnAll, btnG, btnK].forEach(b => {
+        b.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition active:scale-95';
+      });
+
+      if (cat === 'all') btnAll.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-white transition active:scale-95';
+      if (cat === 'gangguan') btnG.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-white transition active:scale-95';
+      if (cat === 'kegiatan') btnK.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-navy text-white transition active:scale-95';
+
+      items.forEach(el => {
+        if (cat === 'all' || el.getAttribute('data-category') === cat) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+    }
+
+    function readArticle(id) {
+      showToast('Warta BUMDes', 'Membuka artikel lengkap pengumuman resmi Desa Kanugrahan...');
+    }
+
+    // --- 10. FAQ Accordion ---
+    function toggleFaq(num) {
+      const ans = document.getElementById(`faqAns${num}`);
+      const icon = document.getElementById(`faqIcon${num}`);
+      if (ans.classList.contains('hidden')) {
+        ans.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        ans.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    // --- 11. Toast / Android Snackbar Notification Helper ---
+    function showToast(title, message) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastTitle').innerText = title;
+      document.getElementById('toastMessage').innerText = message;
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3500);
+    }
+
+    // --- 12. PWA Prompt Handler ---
+    function promptInstallPwa() {
+      showToast('Pasang Aplikasi HP', 'Tekan tombol Titik Tiga (⋮) di Chrome Android lalu pilih "Tambahkan ke Layar Utama".');
+    }
+
+    function dismissPwaBanner() {
+      const b = document.getElementById('pwaBanner');
+      if (b) {
+        b.style.display = 'none';
+      }
+    }
+
+    // --- 13. Mobile Bottom Navigation Active Switcher ---
+    function setBottomNavActive(id) {
+      ['bNavHome', 'bNavBill', 'bNavAduan', 'bNavMart', 'bNavScan'].forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          btn.classList.remove('bottom-nav-active', 'text-brand-navy');
+          btn.classList.add('text-slate-500');
+        }
+      });
+      const active = document.getElementById(id);
+      if (active) {
+        active.classList.add('bottom-nav-active', 'text-brand-navy');
+        active.classList.remove('text-slate-500');
+      }
+    }
+
+    // --- 14. Mobile Drawer Toggle ---
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const menuIcon = document.getElementById('menuIcon');
+
+    function closeMobileMenu() {
+      mobileDrawer.classList.add('hidden');
+      menuIcon.className = 'fa-solid fa-bars text-lg';
+    }
+
+    mobileBtn.addEventListener('click', () => {
+      if (mobileDrawer.classList.contains('hidden')) {
+        mobileDrawer.classList.remove('hidden');
+        menuIcon.className = 'fa-solid fa-xmark text-lg';
+      } else {
+        closeMobileMenu();
+      }
+    });
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+  </script>
+</body>
+</html>
